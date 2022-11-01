@@ -18,6 +18,9 @@ public class TrainingCentre {
     public int getCurrentCapacity() {
         return traineeList.size();
     }
+    public int getRemainingCapacity() {
+        return maxCapacity-traineeList.size();
+    }
 
     public boolean trainingCentreIsFull() {
         return isFull;
