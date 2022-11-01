@@ -26,7 +26,7 @@ public class TrainingCentreManager {
                 return resultingUptake;
             } else {
                 trainingCentre.addTrainee(traineeQueue.remove());
-                resultingUptake =- 1;
+                resultingUptake--;
             }
         }
         return resultingUptake;
