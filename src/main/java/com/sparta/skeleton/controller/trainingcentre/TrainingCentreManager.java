@@ -22,7 +22,7 @@ public class TrainingCentreManager {
         int loopMax = Math.min(uptake, trainingCentre.getRemainingCapacity());
 
         for (int i =0; i<loopMax; i++){
-            if (traineeQueue.size() < 1) {
+            if (traineeQueue.size() < 1 || trainingCentre.trainingCentreIsFull()) {
                 return resultingUptake;
             } else {
                 trainingCentre.addTrainee(traineeQueue.remove());
