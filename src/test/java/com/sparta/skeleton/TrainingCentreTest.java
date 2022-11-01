@@ -69,5 +69,13 @@ public class TrainingCentreTest {
         Assertions.assertEquals(2,trainingCentre2.getTrainingCentreID());
     }
 
-
+    @Test
+    @DisplayName("check training centre remaining capacity")
+    public void checkTrainingCentreRemainingCapacity() {
+        for (int i = 0; i < 99; i++){
+            Trainee trainee = new Trainee();
+            trainingCentre3.addTrainee(trainee);
+        }
+        Assertions.assertEquals(1,trainingCentre3.getRemainingCapacity());
+    }
 }
