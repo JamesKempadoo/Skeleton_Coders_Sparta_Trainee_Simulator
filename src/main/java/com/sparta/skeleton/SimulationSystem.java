@@ -28,6 +28,7 @@ public class SimulationSystem {
         for (int i = 1; i <= durationInMonths; i++) {
             logger.log(Level.FINE, "Current month in simulation: " + i);
             traineesInWild = TraineeGenerator.getTrainees();
+
             if (i % 2 == 0) {
                 logger.log(Level.FINER, "Training centre generated in month: " + i);
                 trainingCentres.add(TrainingCentreGenerator.generateTrainingCentre());

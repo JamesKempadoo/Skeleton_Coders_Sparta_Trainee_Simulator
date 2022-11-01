@@ -5,6 +5,7 @@ import com.sparta.skeleton.view.DisplayManager;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SimulationLoader {
@@ -12,6 +13,7 @@ public class SimulationLoader {
     Logger logger = LoggerSingleton.getSingleton().getLogger();
 
     public void start() {
+        logger.log(Level.INFO,"\n \n NEW SIMULATION HAS STARTED");
         Scanner in = new Scanner(System.in);
         DisplayManager.printQueryOfYear();
         int numOfYears;
