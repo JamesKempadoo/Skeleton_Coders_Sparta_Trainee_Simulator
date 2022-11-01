@@ -13,8 +13,9 @@ public class TrainingCentreGenerator {
     //USER STORIES
     //Generation for training Centre
 
-    public void generateTrainingCentre() {
-        TrainingCentre trainingCentre = new TrainingCentre();
+    public static TrainingCentre generateTrainingCentre() {
+
+        return new TrainingCentre();
     }
     //
 }
