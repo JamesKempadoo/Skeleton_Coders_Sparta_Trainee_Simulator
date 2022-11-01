@@ -67,6 +67,7 @@ Clone the repository below.
 <span style="color: red;">**Model**</span>
 
 **Trainee** - Class that is responsible for housing the trainee constructor and the getterTraineeID
+
 **TrainingCentre** - This class is responsible for constructing training centres, and attaching trainees to the centre
 
 <span style="color: red;">**View**</span>
