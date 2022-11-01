@@ -11,7 +11,6 @@ public class SimulationLoader {
 
     public void start() {
         logger.log(Level.INFO, "Example");
-
     }
 
 }
