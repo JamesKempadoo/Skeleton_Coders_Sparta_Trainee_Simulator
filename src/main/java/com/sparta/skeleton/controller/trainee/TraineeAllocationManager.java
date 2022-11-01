@@ -15,14 +15,13 @@ public class TraineeAllocationManager {
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
 
     static void allocate(Queue<Trainee> wildList, Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
-        TrainingCentreManager centreManager = new TrainingCentreManager();
-        int traineeUptake =  0;
+        int traineeUptake;
         waitList.addAll(wildList);
 
         if (!waitList.isEmpty()) {
             for (TrainingCentre centre : centres) { // fill each training centre before going to the next centre
-                //traineeUptake = centreManager.generateRandomTraineeUptake();
-                //traineeUptake = centreManager.populate(waitList, centre, traineeUptake);
+                traineeUptake = TrainingCentreManager.generateRandomTraineeUptake();
+                traineeUptake = TrainingCentreManager.populateTrainingCentre(waitList, centre, traineeUptake);
                 if (traineeUptake > 0) {
                     logger.log(Level.FINE, "Log current centre has larger uptake than available trainees");
                     break;
@@ -33,24 +32,6 @@ public class TraineeAllocationManager {
             logger.log(Level.FINE, "No trainees to allocate");
         }
     }
-
-
-    // check waitlist = not empty
-    // trainingcentremanager
-    //
-    // for trainingcentre if not full
-    // tcm.Allocate(waitlist, trainingcentre)
-    // tcm.
-    //
-    //
-    // check wild
-    // tcm.Allocate(wild, trainingcentre)
-    //
-
-    // waitlist queue of 200 trainees -> traingcentremanager(waitlist, trainingcentre, uptake)   50 uptake,  ->  for (25) (one trainee) ->25 trainees
-
-    // allocateTraineesToCenter
-
 
 }
 
