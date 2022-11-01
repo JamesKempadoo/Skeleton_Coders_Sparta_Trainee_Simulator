@@ -13,7 +13,7 @@ public class TrainingCentreGenerator {
     //USER STORIES
     //Generation for training Centre
 
-    public generateTrainingCentre() {
+    public void generateTrainingCentre() {
         TrainingCentre trainingCentre = new TrainingCentre();
     }
     //
