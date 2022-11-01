@@ -1,23 +1,48 @@
 package com.sparta.skeleton.controller.trainingcentre;
 
-public class TrainingCentreManager {
+import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.TrainingCentre;
 
-    //Keep count of trainees in Training Centre
+import java.util.ArrayList;
+import java.util.Queue;
+
+public class TrainingCentreManager implements TrainingCentreManageable{
 
 
-    //Method for Dealing with overflow of trainees
+    @Override
+    public int getTraineeCount(ArrayList<TrainingCentre> trainingCentre) {
+        return trainingCentre.size();
+    }
 
-    //0-50 trainee intake
+    @Override
+    public int populateTrainingCentre(Queue<Trainee> traineeList, TrainingCentre trainingCentre, int uptake) {
+        int resultingUptake;
 
-    //check if full
+        for (int i =0; i<uptake; i++){
+            resultingUptake = uptake;
+            if (traineeList.size() < 0) {
+                return resultingUptake;
+            } else {
+                traineeList.remove();
+                resultingUptake =- 1;
 
-    //??
+            }
+        }
 
+        return 0;
+    }
+
+    @Override
+    public int generateRandomTraineeUptake() {
+        return 0;
+    }
 
     //USER STORIES
     //trainees populate training centre
     //Full capacity Management
     //Prioritize waiting list (? ask if its in here)
 
-    //
+
+
+
 }

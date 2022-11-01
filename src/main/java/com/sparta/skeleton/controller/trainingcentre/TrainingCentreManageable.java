@@ -4,27 +4,24 @@ import com.sparta.skeleton.model.Trainee;
 import com.sparta.skeleton.model.TrainingCentre;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public interface TrainingCentreManageable {
 
     //Keep count of trainees in Training Centre
 
-    int getTraineeCount();
+    int getTraineeCount(ArrayList<TrainingCentre> trainingCentre);
 
 
     //Method for Dealing with overflow of trainees??
 
-    void traineeOverflowHandler();
-    // calls TraineeAllocationManager
-
-    //check if full
-    boolean isFull(TrainingCentre trainingcentre);
-
-
-    void populateTrainingCentre(ArrayList<Trainee> traineeList);
+    int populateTrainingCentre(Queue<Trainee> traineeList, TrainingCentre trainingCentre, int uptake);
 
     //0-50 trainee intake
 
     int generateRandomTraineeUptake();
+
+
+
 
 }
