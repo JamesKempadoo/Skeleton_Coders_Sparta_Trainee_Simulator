@@ -11,17 +11,17 @@ public class TraineeGenerator {
     static final int TRAINEEMAX = 100;
     static final int TRAINEEMIN = 0;
 
-    public ArrayList<Trainee> getTrainees() {
+    static public ArrayList<Trainee> getTrainees() {
         long seed = System.currentTimeMillis();
         return generateTrainees(getRandomTraineesCount(seed));
     }
 
-    public int getRandomTraineesCount(long seed) {
+    static public int getRandomTraineesCount(long seed) {
         Random randomizer = new Random(seed);
         return randomizer.nextInt(TRAINEEMAX - TRAINEEMIN + 1) + TRAINEEMIN;
     }
 
-    public ArrayList<Trainee> generateTrainees(int count) {
+    static public ArrayList<Trainee> generateTrainees(int count) {
         ArrayList<Trainee> trainees = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {

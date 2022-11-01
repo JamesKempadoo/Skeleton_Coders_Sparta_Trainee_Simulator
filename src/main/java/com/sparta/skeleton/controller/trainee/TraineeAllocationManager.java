@@ -14,7 +14,7 @@ public class TraineeAllocationManager {
 
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
 
-    static void allocate(Queue<Trainee> wildList, Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
+    public static void allocate(Queue<Trainee> wildList, Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
         int traineeUptake;
         waitList.addAll(wildList);
 
