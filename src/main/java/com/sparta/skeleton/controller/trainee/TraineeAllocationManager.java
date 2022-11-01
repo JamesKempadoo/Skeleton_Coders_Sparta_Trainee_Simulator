@@ -16,8 +16,8 @@ public class TraineeAllocationManager {
 
     public static void allocate(Queue<Trainee> wildList, Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
         int traineeUptake;
+        logger.log(Level.INFO, "Waiting list size at the beginning of allocation: " + waitList.size());
         waitList.addAll(wildList);
-
         if (!waitList.isEmpty()) {
             for (TrainingCentre centre : centres) { // fill each training centre before going to the next centre
                 traineeUptake = TrainingCentreManager.generateRandomTraineeUptake();
@@ -31,6 +31,7 @@ public class TraineeAllocationManager {
         } else {
             logger.log(Level.FINE, "No trainees to allocate");
         }
+        logger.log(Level.INFO, "Waiting list size at the end of allocation: " + waitList.size());
     }
 
 }
