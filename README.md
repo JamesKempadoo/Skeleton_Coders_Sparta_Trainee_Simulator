@@ -64,6 +64,10 @@ Clone the repository below.
 
 ### <span style="color: blue;">**Program Structure**</span>
 
+**App** - starts the application
+
+**SimulationLoader** - starter class for the whole project
+
 <span style="color: red;">**Model**</span>
 
 **Trainee** - Class that is responsible for housing the trainee constructor and the getterTraineeID
