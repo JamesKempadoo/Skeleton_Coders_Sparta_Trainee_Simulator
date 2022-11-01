@@ -5,9 +5,7 @@ import com.sparta.skeleton.view.DisplayManager;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 public class SimulationLoader {
 
