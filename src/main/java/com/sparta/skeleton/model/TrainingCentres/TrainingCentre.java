@@ -1,17 +1,26 @@
-package com.sparta.skeleton.model;
+package com.sparta.skeleton.model.TrainingCentres;
+
+import com.sparta.skeleton.model.Trainee;
 
 import java.util.ArrayList;
 
-public class TrainingCentre {
+public abstract class TrainingCentre {
 
     int trainingCentreID = 1;
     static int increment = 1;
-    private final int maxCapacity = 100;
-    private ArrayList<Trainee> traineeList = new ArrayList<>();
 
-    public TrainingCentre() {
+    protected int maxCapacity;
+    protected ArrayList<Trainee> traineeList = new ArrayList<>();
+
+    protected int countMonths = 0;
+
+    protected int maxMonths = 1;
+
+    public TrainingCentre(int maxCapacity, int maxMonths) {
         trainingCentreID = increment;
         increment++;
+        this.maxCapacity = maxCapacity;
+        this.maxMonths = maxMonths;
     }
 
     public int getCurrentCapacity() {
@@ -37,6 +46,14 @@ public class TrainingCentre {
 
     public ArrayList<Trainee> getTraineeList() {
         return traineeList;
+    }
+
+    public void incrementMonth() {
+        countMonths++;
+    }
+
+    public boolean isOverMaxMonths() {
+        return countMonths >= maxMonths;
     }
 
 
