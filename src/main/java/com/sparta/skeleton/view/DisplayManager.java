@@ -2,7 +2,6 @@ package com.sparta.skeleton.view;
 
 import com.sparta.skeleton.SimulationSystem;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
 
 import java.util.List;
 import java.util.Queue;
