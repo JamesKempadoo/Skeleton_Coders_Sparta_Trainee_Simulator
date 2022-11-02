@@ -6,6 +6,7 @@ import com.sparta.skeleton.controller.trainingcentre.TrainingCentreGenerator;
 import com.sparta.skeleton.model.Trainee;
 import com.sparta.skeleton.model.TrainingCentre;
 import com.sparta.skeleton.util.log.LoggerSingleton;
+import com.sparta.skeleton.view.DisplayManager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ public class SimulationSystem {
 
     private final ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
 
-    public void runSimulation(int years) {
+    public void runSimulation(int years, boolean isOutputAnnual) {
         int durationInMonths = years * 12;
         logger.log(Level.INFO, "Start of the simulation with duration: " + durationInMonths + " months.");
         for (int i = 1; i <= durationInMonths; i++) {
@@ -34,7 +35,21 @@ public class SimulationSystem {
                 trainingCentres.add(TrainingCentreGenerator.generateTrainingCentre());
             }
             TraineeAllocationManager.allocate(traineesInWild, waitingList, trainingCentres);
+            if (isOutputAnnual && i % 12 == 0) {
+                DisplayManager.printOutput(this, i / 12);
+            }
         }
+        if (!isOutputAnnual) {
+            DisplayManager.printOutput(this, durationInMonths / 12);
+        }
+    }
+
+    public long getNumberOfFullTrainingCentres() {
+        return trainingCentres.stream().filter(TrainingCentre::trainingCentreIsFull).count();
+    }
+
+    public int getNumberOfTraineesInTraining() {
+        return trainingCentres.stream().mapToInt(TrainingCentre::getCurrentCapacity).sum();
     }
 
     public Queue<Trainee> getTraineesInWild() {
@@ -47,5 +62,13 @@ public class SimulationSystem {
 
     public ArrayList<TrainingCentre> getTrainingCentres() {
         return trainingCentres;
+    }
+
+    @Override
+    public String toString() {
+        return "Number of open centres: " + trainingCentres.size() +
+                "\nNumber of full centres: " + getNumberOfFullTrainingCentres() +
+                "\nNumber of trainees currently on training: " + getNumberOfTraineesInTraining() +
+                "\nNumber of trainees on the waiting list: " + waitingList.size();
     }
 }

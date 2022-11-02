@@ -36,22 +36,32 @@ public class SimulationLoader {
                     in.nextLine();
                 }
             } while (true);
+            boolean isOutputAnnual;
+            DisplayManager.displayOutputOptions();
+            do {
+                try {
+                    isOutputAnnual = in.next().equalsIgnoreCase("y");
+                    break;
+                } catch (InputMismatchException e) {
+                    DisplayManager.printWrongInputMessage(in.next());
+                    in.nextLine();
+                }
+            } while (true);
             if (isNumOfYears) {
-                runSimulationForSingleInput(Integer.parseInt(userInput));
+                runSimulationForSingleInput(Integer.parseInt(userInput), isOutputAnnual);
             } else {
-                runSimulationFromFile(PATH_PREFIX + userInput);
+                runSimulationFromFile(PATH_PREFIX + userInput, isOutputAnnual);
             }
             DisplayManager.displayExitOption();
-        } while (!in.next().equalsIgnoreCase("n"));
+        } while (!in.next().equalsIgnoreCase("e"));
     }
 
-    private static void runSimulationForSingleInput(int userInput) {
+    private static void runSimulationForSingleInput(int userInput, boolean isOutputAnnual) {
         SimulationSystem simulationSystem = new SimulationSystem();
-        simulationSystem.runSimulation(userInput);
-        DisplayManager.printOutput(simulationSystem.getWaitingList(), simulationSystem.getTrainingCentres(), userInput);
+        simulationSystem.runSimulation(userInput, isOutputAnnual);
     }
 
-    private void runSimulationFromFile(String filename) {
+    private void runSimulationFromFile(String filename, boolean isOutputAnnual) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line;
             int lineCounter = 0;
@@ -64,7 +74,7 @@ public class SimulationLoader {
                     DisplayManager.printErrorInFile(line.split(" ")[0], lineCounter);
                     continue;
                 }
-                runSimulationForSingleInput(numOfYears);
+                runSimulationForSingleInput(numOfYears, isOutputAnnual);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
