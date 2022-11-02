@@ -15,24 +15,11 @@ public class TraineeAllocationManager {
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
 
     public static void allocate(Queue<Trainee> wildList, Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
-        int traineeUptake;
         logger.log(Level.INFO, "Waiting list size at the beginning of allocation: " + waitList.size());
         logger.log(Level.INFO, "Currently trainees in wild: " + wildList.size());
-        waitList.addAll(wildList);
-        wildList.clear();
+        mergeQueues(wildList, waitList);
         if (!waitList.isEmpty()) {
-            for (TrainingCentre centre : centres) { // fill each training centre before going to the next centre
-                if (centre.trainingCentreIsFull()){
-                    continue;
-                }
-                traineeUptake = TrainingCentreManager.generateRandomTraineeUptake();
-                logger.log(Level.INFO, "Current Trainee Uptake Before populating: " + traineeUptake);
-                traineeUptake = TrainingCentreManager.populateTrainingCentre(waitList, centre, traineeUptake);
-                if (traineeUptake > 0) {
-                    logger.log(Level.FINE, "Log current centre has larger uptake than available trainees");
-                    break;
-                }
-            }
+            allocateToTrainingCentres(waitList, centres);
 
         } else {
             logger.log(Level.FINE, "No trainees to allocate");
@@ -40,5 +27,26 @@ public class TraineeAllocationManager {
         logger.log(Level.INFO, "Waiting list size at the end of allocation: " + waitList.size());
     }
 
-}
+    public static void allocateToTrainingCentres(Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
+        int traineeUptake;
+        for (TrainingCentre centre : centres) { // fill each training centre before going to the next centre
+            if (centre.trainingCentreIsFull()){
+                continue;
+            }
+            traineeUptake = TrainingCentreManager.generateRandomTraineeUptake();
+            logger.log(Level.INFO, "Current Trainee Uptake Before populating: " + traineeUptake);
+            traineeUptake = TrainingCentreManager.populateTrainingCentre(waitList, centre, traineeUptake);
+            if (traineeUptake > 0) {
+                logger.log(Level.FINE, "Log current centre has larger uptake than available trainees");
+                break;
+            }
+        }
+    }
 
+    public static void mergeQueues(Queue<Trainee> wildList, Queue<Trainee> waitList) {
+        waitList.addAll(wildList);
+        wildList.clear();
+    }
+
+
+}

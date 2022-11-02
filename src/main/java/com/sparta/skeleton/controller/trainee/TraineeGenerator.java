@@ -3,7 +3,6 @@ package com.sparta.skeleton.controller.trainee;
 
 import com.sparta.skeleton.model.Trainee;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;

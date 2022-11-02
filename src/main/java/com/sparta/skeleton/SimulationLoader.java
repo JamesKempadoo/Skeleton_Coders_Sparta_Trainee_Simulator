@@ -17,7 +17,6 @@ public class SimulationLoader {
     private static final String PATH_PREFIX = "src/main/resources/";
     Logger logger = LoggerSingleton.getSingleton().getLogger();
 
-
     public void start() {
         logger.log(Level.INFO, "\n \n NEW SIMULATION HAS STARTED");
         Scanner in = new Scanner(System.in);

@@ -16,7 +16,6 @@ public class TraineeGeneratorTest {
     @DisplayName("Check that seed input returns pseudo-random integer in range of 0-100")
     public void checkThatRandomGeneratorReturns0To100() {
         long seed = System.currentTimeMillis();
-
         int max = 100;
         int min = 0;
         int randCount = TraineeGenerator.getRandomTraineesCount(seed);
