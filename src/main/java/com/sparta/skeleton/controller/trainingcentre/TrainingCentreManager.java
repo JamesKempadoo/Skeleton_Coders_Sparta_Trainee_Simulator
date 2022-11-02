@@ -12,8 +12,6 @@ public class TrainingCentreManager {
 
 
 
-
-
     public static int getTraineeCount(ArrayList<TrainingCentre> trainingCentre) {
         return trainingCentre.size();
     }
@@ -39,7 +37,6 @@ public class TrainingCentreManager {
 
         return random.nextInt(51);
     }
-
 
     //USER STORIES
     //trainees populate training centre
