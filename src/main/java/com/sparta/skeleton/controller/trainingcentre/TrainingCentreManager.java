@@ -25,9 +25,7 @@ public class TrainingCentreManager {
 
     public static void closeCentre (TrainingCentre centre, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres){
         TraineeAllocationManager.sendToFrontOfWaitList(centre, waitList);
-        centre.getTraineeList().clear();
-
-
+        closedCentres.add(centre);
     }
 
 
