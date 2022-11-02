@@ -4,7 +4,7 @@ import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.controller.trainee.TraineeGenerator;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreGenerator;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
+import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
 import com.sparta.skeleton.util.log.LoggerSingleton;
 import com.sparta.skeleton.view.DisplayManager;
 

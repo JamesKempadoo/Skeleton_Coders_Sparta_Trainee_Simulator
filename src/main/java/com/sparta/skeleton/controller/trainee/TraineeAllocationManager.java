@@ -2,7 +2,7 @@ package com.sparta.skeleton.controller.trainee;
 
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
+import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
 import com.sparta.skeleton.util.log.LoggerSingleton;
 
 import java.util.ArrayList;

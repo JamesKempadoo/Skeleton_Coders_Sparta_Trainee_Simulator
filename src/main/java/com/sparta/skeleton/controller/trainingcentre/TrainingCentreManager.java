@@ -2,7 +2,7 @@ package com.sparta.skeleton.controller.trainingcentre;
 
 import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
+import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class TrainingCentreManager {
         }
     }
 
-    public static void closeCentre(TrainingCentre centre, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres){
+    public static void closeCentre (TrainingCentre centre, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres){
         TraineeAllocationManager.sendToFrontOfWaitList(centre, waitList);
         centre.getTraineeList().clear();
 
