@@ -19,14 +19,14 @@ public class TrainingCentreManager {
 
     public static int populateTrainingCentre(Queue<Trainee> traineeQueue, TrainingCentre trainingCentre, int uptake) {
         int resultingUptake = uptake;
-        int loopMax = Math.min(uptake, trainingCentre.getCurrentCapacity());
+        int loopMax = Math.min(uptake, trainingCentre.getRemainingCapacity());
 
         for (int i =0; i<loopMax; i++){
-            if (traineeQueue.size() < 1) {
+            if (traineeQueue.size() < 1 || trainingCentre.trainingCentreIsFull()) {
                 return resultingUptake;
             } else {
                 trainingCentre.addTrainee(traineeQueue.remove());
-                resultingUptake =- 1;
+                resultingUptake--;
             }
         }
         return resultingUptake;

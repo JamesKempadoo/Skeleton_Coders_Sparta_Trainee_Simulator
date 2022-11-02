@@ -8,7 +8,6 @@ public class TrainingCentre {
     static int increment = 1;
     private final int maxCapacity = 100;
     private ArrayList<Trainee> traineeList = new ArrayList<>();
-    private boolean isFull = false;
 
     public TrainingCentre() {
         trainingCentreID = increment;
@@ -18,16 +17,17 @@ public class TrainingCentre {
     public int getCurrentCapacity() {
         return traineeList.size();
     }
+    public int getRemainingCapacity() {
+        return maxCapacity-traineeList.size();
+    }
 
     public boolean trainingCentreIsFull() {
-        return isFull;
+        return maxCapacity == traineeList.size();
     }
 
     public void addTrainee(Trainee trainee) {
-        if(traineeList.size() < maxCapacity) {
+        if(traineeList.size() <= maxCapacity) {
             traineeList.add(trainee);
-        }else{
-            isFull = true;
         }
     }
 

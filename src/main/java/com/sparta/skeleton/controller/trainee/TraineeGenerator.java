@@ -3,7 +3,8 @@ package com.sparta.skeleton.controller.trainee;
 
 import com.sparta.skeleton.model.Trainee;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class TraineeGenerator {
@@ -11,7 +12,7 @@ public class TraineeGenerator {
     static final int TRAINEEMAX = 100;
     static final int TRAINEEMIN = 0;
 
-    static public ArrayList<Trainee> getTrainees() {
+    static public Queue<Trainee> getTrainees() {
         long seed = System.currentTimeMillis();
         return generateTrainees(getRandomTraineesCount(seed));
     }
@@ -21,8 +22,8 @@ public class TraineeGenerator {
         return randomizer.nextInt(TRAINEEMAX - TRAINEEMIN + 1) + TRAINEEMIN;
     }
 
-    static public ArrayList<Trainee> generateTrainees(int count) {
-        ArrayList<Trainee> trainees = new ArrayList<>();
+    static public Queue<Trainee> generateTrainees(int count) {
+        Queue<Trainee> trainees = new LinkedList<>();
 
         for (int i = 0; i < count; i++) {
             trainees.add(new Trainee());

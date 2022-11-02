@@ -16,11 +16,9 @@ public class TraineeGeneratorTest {
     @DisplayName("Check that seed input returns pseudo-random integer in range of 0-100")
     public void checkThatRandomGeneratorReturns0To100() {
         long seed = System.currentTimeMillis();
-        TraineeGenerator gen = new TraineeGenerator();
-
         int max = 100;
         int min = 0;
-        int randCount = gen.getRandomTraineesCount(seed);
+        int randCount = TraineeGenerator.getRandomTraineesCount(seed);
         Assertions.assertTrue(randCount <= max && randCount >= min, randCount + " is NOT within " + max + " and " + min);
     }
 
@@ -28,10 +26,9 @@ public class TraineeGeneratorTest {
     @DisplayName("Check that seed input returns pseudo-random random integer")
     public void checkThatRandomGeneratorReturnsRandomInt() {
         long seed = System.currentTimeMillis();
-        TraineeGenerator gen = new TraineeGenerator();
         Random rand = new Random(seed);
 
-        Assertions.assertEquals(rand.nextInt(100 + 1), gen.getRandomTraineesCount(seed));
+        Assertions.assertEquals(rand.nextInt(100 + 1), TraineeGenerator.getRandomTraineesCount(seed));
     }
 
 
