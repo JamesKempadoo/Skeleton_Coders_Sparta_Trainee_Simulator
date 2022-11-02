@@ -16,13 +16,13 @@ import java.util.logging.Logger;
 public class SimulationSystem {
 
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
-    private static Queue<Trainee> waitingList = new LinkedList<>();
+    private final Queue<Trainee> waitingList = new LinkedList<>();
 
-    private static Queue<Trainee> traineesInWild = new LinkedList<>();
+    private Queue<Trainee> traineesInWild = new LinkedList<>();
 
-    private static ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
+    private final ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
 
-    public static void runSimulation(int years) {
+    public void runSimulation(int years) {
         int durationInMonths = years * 12;
         logger.log(Level.INFO, "Start of the simulation with duration: " + durationInMonths + " months.");
         for (int i = 1; i <= durationInMonths; i++) {
@@ -33,19 +33,19 @@ public class SimulationSystem {
                 logger.log(Level.FINER, "Training centre generated in month: " + i);
                 trainingCentres.add(TrainingCentreGenerator.generateTrainingCentre());
             }
-            TraineeAllocationManager.allocate(traineesInWild,waitingList,trainingCentres);
+            TraineeAllocationManager.allocate(traineesInWild, waitingList, trainingCentres);
         }
     }
 
-    public static Queue<Trainee> getTraineesInWild() {
+    public Queue<Trainee> getTraineesInWild() {
         return traineesInWild;
     }
 
-    public static Queue<Trainee> getWaitingList() {
+    public Queue<Trainee> getWaitingList() {
         return waitingList;
     }
 
-    public static ArrayList<TrainingCentre> getTrainingCentres() {
+    public ArrayList<TrainingCentre> getTrainingCentres() {
         return trainingCentres;
     }
 }
