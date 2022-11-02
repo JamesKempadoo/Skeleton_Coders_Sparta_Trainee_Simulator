@@ -26,7 +26,7 @@ public class TrainingCentre {
     }
 
     public void addTrainee(Trainee trainee) {
-        if(traineeList.size() <= maxCapacity) {
+        if(traineeList.size() < maxCapacity) {
             traineeList.add(trainee);
         }
     }
