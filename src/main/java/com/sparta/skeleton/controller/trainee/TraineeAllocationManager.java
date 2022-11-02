@@ -6,6 +6,7 @@ import com.sparta.skeleton.model.TrainingCentre;
 import com.sparta.skeleton.util.log.LoggerSingleton;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,13 @@ public class TraineeAllocationManager {
                 logger.log(Level.FINE, "Log current centre has larger uptake than available trainees");
                 break;
             }
+        }
+    }
+
+    public static void sendToFrontOfWaitList(TrainingCentre trainingCentre, Deque<Trainee> waitList) {
+        ArrayList<Trainee> trainees = trainingCentre.getTraineeList();
+        for (Trainee trainee : trainees) {
+            waitList.addFirst(trainee);
         }
     }
 
