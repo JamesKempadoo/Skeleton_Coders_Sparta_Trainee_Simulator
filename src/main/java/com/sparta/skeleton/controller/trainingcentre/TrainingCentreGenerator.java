@@ -9,6 +9,9 @@ import java.util.Random;
 
 public class TrainingCentreGenerator {
 
+    public static final int BOOTCAMPS_MAX = 2;
+
+    public static int bootcampCount = 0;
 
     //Call Training Centre object and create new
     //To String method
@@ -20,13 +23,25 @@ public class TrainingCentreGenerator {
 
     public static TrainingCentre generateTrainingCentre() throws RuntimeException {
         Random rand = new Random();
+        int nextCenter;
 
-        return switch (rand.nextInt(3)) {
-            case 0 -> new Bootcamp();
-            case 1 -> new TechCentre();
-            case 2 -> new TrainingHub();
-            default -> throw new RuntimeException("Invalid case");
-        };
+        if (bootcampCount >= BOOTCAMPS_MAX) {
+            nextCenter = rand.nextInt(2);
+        } else {
+            nextCenter = rand.nextInt(3);
+        }
+
+        switch (nextCenter) {
+            case 0:
+                return new TrainingHub();
+            case 1:
+                return new TechCentre();
+            case 2:
+                bootcampCount++;
+                return new Bootcamp();
+            default:
+                throw new RuntimeException("Invalid case");
+        }
 
     }
 }
