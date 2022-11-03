@@ -1,6 +1,8 @@
 package com.sparta.skeleton.controller.trainee;
 
+import com.sparta.skeleton.controller.client.ClientManager;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
+import com.sparta.skeleton.model.Client;
 import com.sparta.skeleton.model.Trainee;
 import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import com.sparta.skeleton.utilities.logging.LoggerSingleton;
@@ -40,6 +42,17 @@ public class TraineeAllocationManager {
                 logger.log(Level.FINE, "Log current centre has larger uptake than available trainees");
                 break;
             }
+        }
+    }
+
+    public static void allocateToClients(Deque<Trainee> graduates, ArrayList<Client> clients) {
+        for (Client client : clients) { // fill each training centre before going to the next centre
+            if (!client.isHappy()){
+                continue;
+            }
+            logger.log(Level.FINE, "Current client graduate list before populating: " + "id: " + client.getClientID() + " list count: " + client.getTraineeList().size());
+            ClientManager.populateClients(graduates, client);
+            logger.log(Level.FINE, "Current client graduate list after populating: " + "id: " + client.getClientID() + " list count: " + client.getTraineeList().size());
         }
     }
 
