@@ -1,17 +1,16 @@
 package com.sparta.skeleton.controller.trainingcentre;
 
-import com.sparta.skeleton.model.TrainingCentres.Bootcamp;
-import com.sparta.skeleton.model.TrainingCentres.TechCentre;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
-import com.sparta.skeleton.model.TrainingCentres.TrainingHub;
+import com.sparta.skeleton.model.trainingCentres.Bootcamp;
+import com.sparta.skeleton.model.trainingCentres.TechCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingHub;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TrainingCentreGenerator {
 
-    public static final int BOOTCAMPS_MAX = 2;
-
-    public static int bootcampCount = 0;
+    public static final int BOOTCAMP_MAX = 2;
 
     //Call Training Centre object and create new
     //To String method
@@ -21,11 +20,11 @@ public class TrainingCentreGenerator {
     //Generation for training Centre
 
 
-    public static TrainingCentre generateTrainingCentre() throws RuntimeException {
+    public static void generateTrainingCentre(ArrayList<TrainingCentre> trainingCentres) throws RuntimeException {
         Random rand = new Random();
         int nextCenter;
 
-        if (bootcampCount >= BOOTCAMPS_MAX) {
+        if (trainingCentres.stream().filter(trainingCentre -> trainingCentre.getClass().getSimpleName().equals("Bootcamp")).count() >= BOOTCAMP_MAX) {
             nextCenter = rand.nextInt(2);
         } else {
             nextCenter = rand.nextInt(3);
@@ -33,15 +32,18 @@ public class TrainingCentreGenerator {
 
         switch (nextCenter) {
             case 0:
-                return new TrainingHub();
+                for (int i = 0; i < 3; i++) {
+                    trainingCentres.add(new TrainingHub());
+                }
+                break;
             case 1:
-                return new TechCentre();
+                trainingCentres.add(new TechCentre());
+                break;
             case 2:
-                bootcampCount++;
-                return new Bootcamp();
+                trainingCentres.add(new Bootcamp());
+                break;
             default:
                 throw new RuntimeException("Invalid case");
         }
-
     }
 }

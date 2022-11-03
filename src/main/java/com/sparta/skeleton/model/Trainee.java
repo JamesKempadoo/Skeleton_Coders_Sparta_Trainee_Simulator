@@ -1,27 +1,21 @@
 package com.sparta.skeleton.model;
 
-import java.util.Random;
+import com.sparta.skeleton.utilities.TraineeHelper;
 
 public class Trainee {
-    private int traineeID = 1;
-    private static int increment = 1;
 
-    public String courseType = "";
+    private static int increment = 1;
+    private final int traineeID;
+    private final String courseType;
 
     public Trainee() {
         traineeID = increment;
+        courseType = TraineeHelper.getRandomTraineeType();
         increment++;
-        courseType = setRandomCourseType();
     }
 
     public int getTraineeID() {
         return traineeID;
-    }
-
-    public String setRandomCourseType() {
-        String[] courses = {"Java", "C#", "Data", "DevOps", "Business"};
-        Random rng = new Random();
-        return courses[rng.nextInt(courses.length)];
     }
 
     public String getCourseType() {

@@ -1,8 +1,5 @@
 package com.sparta.skeleton;
 
-import com.sparta.skeleton.model.TrainingCentres.Bootcamp;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
-
 /**
  * Hello world!
  */

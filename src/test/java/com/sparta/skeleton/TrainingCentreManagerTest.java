@@ -1,9 +1,9 @@
 package com.sparta.skeleton;
 
-import com.sparta.skeleton.controller.trainee.TraineeGenerator;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingHub;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -13,11 +13,11 @@ public class TrainingCentreManagerTest {
 
     private ArrayList<TrainingCentre> trainingCentreList = new ArrayList<>();
 
-    private TrainingCentre trainingCentre1 = new TrainingCentre();
-    private TrainingCentre trainingCentre2 = new TrainingCentre();
-    private TrainingCentre trainingCentre3 = new TrainingCentre();
+    private TrainingCentre trainingCentre1 = new TrainingHub();
+    private TrainingCentre trainingCentre2 = new TrainingHub();
+    private TrainingCentre trainingCentre3 = new TrainingHub();
 
-    private Queue<Trainee> traineeQueue = new LinkedList<>();
+    private Deque<Trainee> traineeQueue = new LinkedList<>();
 
 
     @Test
@@ -39,7 +39,7 @@ public class TrainingCentreManagerTest {
         }
         Assertions.assertEquals(0, TrainingCentreManager.populateTrainingCentre(traineeQueue, trainingCentre1, uptake));
         Assertions.assertEquals(25, trainingCentre1.getCurrentCapacity());
-        Assertions.assertEquals(false, trainingCentre1.trainingCentreIsFull());
+        Assertions.assertFalse(trainingCentre1.trainingCentreIsFull());
     }
 
 
@@ -60,11 +60,11 @@ public class TrainingCentreManagerTest {
 
         Assertions.assertEquals(25, overflowTrainingCentre1);
         Assertions.assertEquals(100, trainingCentre1.getCurrentCapacity());
-        Assertions.assertEquals(true, trainingCentre1.trainingCentreIsFull());
+        Assertions.assertTrue(trainingCentre1.trainingCentreIsFull());
 
         Assertions.assertEquals(0, TrainingCentreManager.populateTrainingCentre(traineeQueue, trainingCentre2, overflowTrainingCentre1));
         Assertions.assertEquals(25, trainingCentre2.getCurrentCapacity());
-        Assertions.assertEquals(false, trainingCentre2.trainingCentreIsFull());
+        Assertions.assertFalse(trainingCentre2.trainingCentreIsFull());
     }
 
 }

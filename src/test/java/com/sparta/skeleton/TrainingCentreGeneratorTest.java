@@ -1,19 +1,23 @@
 package com.sparta.skeleton;
 
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreGenerator;
-import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.Bootcamp;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 public class TrainingCentreGeneratorTest {
 
     @Test
     @DisplayName("Test that the first TrainingCentre")
     void testFirstTraineeCreated() {
-        TrainingCentre trainingCentre1 = new TrainingCentre();
-        Assertions.assertEquals(trainingCentre1.getClass(), TrainingCentreGenerator.generateTrainingCentre().getClass());
+        ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
+        TrainingCentreGenerator.generateTrainingCentre(trainingCentres);
+        TrainingCentre trainingCentre1 = new Bootcamp();
+        Assertions.assertEquals(trainingCentre1.getClass().getSuperclass(), trainingCentres.get(0).getClass().getSuperclass());
     }
     
 

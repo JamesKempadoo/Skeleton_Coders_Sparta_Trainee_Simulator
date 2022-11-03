@@ -2,8 +2,8 @@ package com.sparta.skeleton.controller.trainee;
 
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
-import com.sparta.skeleton.util.log.LoggerSingleton;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
+import com.sparta.skeleton.utilities.logging.LoggerSingleton;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -15,20 +15,19 @@ public class TraineeAllocationManager {
 
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
 
-    public static void allocate(Queue<Trainee> wildList, Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
+    public static void allocate(Queue<Trainee> wildList, Deque<Trainee> waitList, ArrayList<TrainingCentre> centres) {
         logger.log(Level.INFO, "Waiting list size at the beginning of allocation: " + waitList.size());
         logger.log(Level.INFO, "Currently trainees in wild: " + wildList.size());
         mergeQueues(wildList, waitList);
         if (!waitList.isEmpty()) {
             allocateToTrainingCentres(waitList, centres);
-
         } else {
             logger.log(Level.FINE, "No trainees to allocate");
         }
         logger.log(Level.INFO, "Waiting list size at the end of allocation: " + waitList.size());
     }
 
-    public static void allocateToTrainingCentres(Queue<Trainee> waitList, ArrayList<TrainingCentre> centres) {
+    public static void allocateToTrainingCentres(Deque<Trainee> waitList, ArrayList<TrainingCentre> centres) {
         int traineeUptake;
         for (TrainingCentre centre : centres) { // fill each training centre before going to the next centre
             if (centre.trainingCentreIsFull()){

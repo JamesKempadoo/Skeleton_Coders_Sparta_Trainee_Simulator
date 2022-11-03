@@ -1,4 +1,4 @@
-package com.sparta.skeleton.util.log;
+package com.sparta.skeleton.utilities.logging;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;

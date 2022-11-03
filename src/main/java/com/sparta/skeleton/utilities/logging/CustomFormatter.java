@@ -1,4 +1,4 @@
-package com.sparta.skeleton.util.log;
+package com.sparta.skeleton.utilities.logging;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
