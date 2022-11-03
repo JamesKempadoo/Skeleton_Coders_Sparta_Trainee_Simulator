@@ -1,5 +1,7 @@
 package com.sparta.skeleton.model;
 
+import com.sparta.skeleton.model.trainees.Trainee;
+import com.sparta.skeleton.utilities.NonGaussianRandomBias;
 import com.sparta.skeleton.utilities.TraineeHelper;
 
 import java.util.ArrayList;
@@ -13,7 +15,9 @@ public class Client {
     private int countMonths = 0;
     private ArrayList<Trainee> clientList = new ArrayList<>();
 
-    private int traineeRequirement;
+    private final int traineeRequirement;
+
+    private int currentTraineeRequirement;
 
     private String[] typeOfTrainee;
 
@@ -21,6 +25,7 @@ public class Client {
         clientID = increment;
         typeOfTrainee = setTypeOfTrainee();
         traineeRequirement = setTraineeRequirement();
+        currentTraineeRequirement = traineeRequirement;
         increment++;
     }
 
@@ -28,6 +33,7 @@ public class Client {
         clientID = increment;
         typeOfTrainee = setTypeOfTrainee();
         this.traineeRequirement = traineeRequirement;
+        currentTraineeRequirement = traineeRequirement;
         increment++;
     }
 
@@ -40,15 +46,23 @@ public class Client {
     }
 
     public boolean isHappy() {
-        return countMonths > 12 && clientList.size() >= traineeRequirement;
+        return countMonths % 12 != 0 || clientList.size() >= currentTraineeRequirement;
+    }
+
+    public void setCurrentTraineeRequirement() {
+        currentTraineeRequirement += traineeRequirement;
     }
 
     public void incrementMonth() {
         countMonths++;
     }
 
+    public int getNumberOfGraduates() {
+        return clientList.size();
+    }
+
     public int getTraineeRequirement() {
-        return traineeRequirement;
+        return currentTraineeRequirement;
     }
 
     public String[] getTypeOfTrainee() {
@@ -60,17 +74,18 @@ public class Client {
     }
 
     private int setTraineeRequirement() {
-        Random rng = new Random();
-        int delay;
-        do {
-            double val = rng.nextGaussian() * 100 + 15;
-            delay = (int) Math.round(val);
-        } while (delay <= 15);
-        return delay;
+//        Random rng = new Random();
+//        int delay;
+//        do {
+//            double val = rng.nextGaussian() * 100 + 15;
+//            delay = (int) Math.round(val);
+//        } while (delay <= 15);
+//        return delay;
+        return NonGaussianRandomBias.randomBiasGenerator();
     }
 
     public void addTrainee(Trainee trainee) {
-        if(clientList.size() < traineeRequirement) {
+        if(clientList.size() < currentTraineeRequirement) {
             clientList.add(trainee);
         }
     }

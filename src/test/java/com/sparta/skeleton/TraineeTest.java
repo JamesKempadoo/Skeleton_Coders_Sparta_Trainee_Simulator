@@ -1,10 +1,9 @@
 package com.sparta.skeleton;
 
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Trim;
 
 import java.util.Arrays;
 

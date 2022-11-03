@@ -1,6 +1,6 @@
 package com.sparta.skeleton.model.trainingCentres;
 
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 
 import java.util.ArrayList;
 

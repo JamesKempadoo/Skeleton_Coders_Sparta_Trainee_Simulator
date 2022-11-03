@@ -1,10 +1,14 @@
 package com.sparta.skeleton.model.simulation;
 
+import com.sparta.skeleton.controller.client.ClientGenerator;
+import com.sparta.skeleton.controller.client.ClientManager;
 import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.controller.trainee.TraineeGenerator;
+import com.sparta.skeleton.controller.trainee.TraineeManager;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreGenerator;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.Client;
+import com.sparta.skeleton.model.trainees.Trainee;
 import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import com.sparta.skeleton.utilities.TraineeHelper;
 import com.sparta.skeleton.utilities.TrainingCentreHelper;
@@ -20,6 +24,10 @@ public class SimulationSystem {
 
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
     protected final Deque<Trainee> waitingList = new LinkedList<>();
+
+    protected final Deque<Trainee> graduatesList = new LinkedList<>();
+
+    protected final ArrayList<Client> clients = new ArrayList<>();
 
     protected Queue<Trainee> traineesInWild = new LinkedList<>();
 
@@ -37,13 +45,24 @@ public class SimulationSystem {
                 logger.log(Level.FINER, "Training centre generated in month: " + i);
                 TrainingCentreGenerator.generateTrainingCentre(trainingCentres);
             }
+            if (i % 12 == 0) {
+                clients.add(ClientGenerator.generateClient());
+                Client x = clients.get(clients.size()-1);
+                System.out.println(x.getTraineeRequirement() + "::" + Arrays.toString(x.getTypeOfTrainee()));
+                logger.log(Level.FINER, "Number of clients in month " + i + ": " + clients.size());
+            }
             TrainingCentreManager.incrementMonthCounter(trainingCentres);
+            ClientManager.incrementClientMonth(clients);
             TraineeAllocationManager.allocate(traineesInWild, waitingList, trainingCentres);
-            TrainingCentreManager.close(trainingCentres,waitingList,closedTrainingCentres);
+            TraineeManager.incrementTraineeMonthCounter(trainingCentres);
+            TrainingCentreManager.close(trainingCentres, waitingList, closedTrainingCentres);
+            TraineeAllocationManager.benchTrainees(graduatesList, trainingCentres);
+            logger.log(Level.FINE, "Number of graduates in graduate list: " + graduatesList.size());
+            TraineeAllocationManager.allocateToClients(graduatesList, clients);
             if (isOutputMonthly && i < durationInMonths) {
                 DisplayManager.printOutput(this, i, true);
             } else if (i == durationInMonths) {
-                DisplayManager.printOutput(this,durationInMonths/12,false);
+                DisplayManager.printOutput(this, durationInMonths / 12, false);
             }
         }
     }
@@ -52,7 +71,7 @@ public class SimulationSystem {
         return trainingCentres.stream().filter(TrainingCentre::trainingCentreIsFull).collect(Collectors.toList());
     }
 
-    public long getNumberOfTrainingCentresByType(List<TrainingCentre> trainingCentres, String typeOfTrainingCentres){
+    public long getNumberOfTrainingCentresByType(List<TrainingCentre> trainingCentres, String typeOfTrainingCentres) {
         return trainingCentres.stream().filter(trainingCentre -> trainingCentre.getClass().getSimpleName().equals(typeOfTrainingCentres)).count();
     }
 
@@ -60,18 +79,37 @@ public class SimulationSystem {
         return trainingCentres.stream().mapToInt(TrainingCentre::getCurrentCapacity).sum();
     }
 
+    public int getNumberOfGraduatesInClients() {
+        return clients.stream().mapToInt(Client::getNumberOfGraduates).sum();
+    }
+
     public long getNumberOfTraineesInTraining(String typeOfTrainee) {
         long sum = 0;
-        for (TrainingCentre trainingCentre : trainingCentres){
+        for (TrainingCentre trainingCentre : trainingCentres) {
             sum += trainingCentre.getTraineeList().stream().filter(trainee -> trainee.getCourseType().equals(typeOfTrainee)).count();
         }
         return sum;
     }
 
-    public long getNumberOfTraineesInWaitingListByType(String typeOfTrainee){
+    public long getNumberOfTraineesInClients(String typeOfTrainee) {
+        long sum = 0;
+        for (Client client : clients) {
+            sum += client.getTraineeList().stream().filter(trainee -> trainee.getCourseType().equals(typeOfTrainee)).count();
+        }
+        return sum;
+    }
+
+    public long getNumberOfTraineesInWaitingListByType(String typeOfTrainee) {
         return waitingList.stream().filter(trainee -> trainee.getCourseType().equals(typeOfTrainee)).count();
 
     }
+
+    public long getNumberOfTraineesInGraduateListByType(String typeOfTrainee) {
+        return graduatesList.stream().filter(trainee -> trainee.getCourseType().equals(typeOfTrainee)).count();
+
+    }
+
+
 
     public Queue<Trainee> getTraineesInWild() {
         return traineesInWild;
@@ -92,6 +130,7 @@ public class SimulationSystem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 
         sb.append("Number of open centres: ").append(trainingCentres.size());
         formatOutputByTrainingCentreType(trainingCentres, sb);
@@ -104,21 +143,30 @@ public class SimulationSystem {
         formatOutputByTrainingCentreType(closedTrainingCentres, sb);
 
         sb.append("\nNumber of trainees currently on training: ").append(getNumberOfTraineesInTraining());
-        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES){
+        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES) {
             sb.append("\n  - ").append(traineeCourse).append(": ").append(getNumberOfTraineesInTraining(traineeCourse));
         }
 
         sb.append("\nNumber of trainees currently on waiting list: ").append(waitingList.size());
-        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES){
+        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES) {
             sb.append("\n  - ").append(traineeCourse).append(": ").append(getNumberOfTraineesInWaitingListByType(traineeCourse));
         }
 
+        sb.append("\nNumber of trainees currently on graduates list: ").append(graduatesList.size());
+        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES) {
+            sb.append("\n  - ").append(traineeCourse).append(": ").append(getNumberOfTraineesInGraduateListByType(traineeCourse));
+        }
+
+        sb.append("\nNumber of graduates currently on clients: ").append(getNumberOfGraduatesInClients());
+        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES) {
+            sb.append("\n  - ").append(traineeCourse).append(": ").append(getNumberOfTraineesInClients(traineeCourse));
+        }
         return sb.toString();
     }
 
     private void formatOutputByTrainingCentreType(List<TrainingCentre> trainingCentres, StringBuilder sb) {
-        for (String trainingCentreType : TrainingCentreHelper.TRAINING_CENTRE_TYPES){
-            sb.append("\n  - ").append(trainingCentreType).append(": ").append(getNumberOfTrainingCentresByType(trainingCentres,trainingCentreType));
+        for (String trainingCentreType : TrainingCentreHelper.TRAINING_CENTRE_TYPES) {
+            sb.append("\n  - ").append(trainingCentreType).append(": ").append(getNumberOfTrainingCentresByType(trainingCentres, trainingCentreType));
         }
     }
 }

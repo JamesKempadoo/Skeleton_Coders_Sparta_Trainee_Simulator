@@ -8,7 +8,7 @@ import java.util.logging.Level;
 public class CustomFileHandler {
 	public static FileHandler getFileHandler() {
 		try {
-			FileHandler fileHandler = new FileHandler("src/main/resources/TraineeSimulator.log", true);
+			FileHandler fileHandler = new FileHandler("src/main/resources/TraineeSimulator.log", false);
 			fileHandler.setLevel(Level.ALL);
 			fileHandler.setFormatter(new CustomFormatter());
 			return fileHandler;

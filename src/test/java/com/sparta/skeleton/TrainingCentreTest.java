@@ -1,13 +1,11 @@
 package com.sparta.skeleton;
 
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import com.sparta.skeleton.model.trainingCentres.TrainingHub;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 public class TrainingCentreTest {
     private static TrainingCentre trainingCentre1 = new TrainingHub();

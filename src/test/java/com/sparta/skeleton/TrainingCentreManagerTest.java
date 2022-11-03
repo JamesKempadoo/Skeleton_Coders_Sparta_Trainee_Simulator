@@ -1,7 +1,7 @@
 package com.sparta.skeleton;
 
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import com.sparta.skeleton.model.trainingCentres.TrainingHub;
 import org.junit.jupiter.api.*;

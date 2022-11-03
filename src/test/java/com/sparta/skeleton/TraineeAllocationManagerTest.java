@@ -2,12 +2,11 @@ package com.sparta.skeleton;
 
 import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.controller.trainee.TraineeGenerator;
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 

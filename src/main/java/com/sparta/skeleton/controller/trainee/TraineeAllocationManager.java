@@ -3,11 +3,12 @@ package com.sparta.skeleton.controller.trainee;
 import com.sparta.skeleton.controller.client.ClientManager;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
 import com.sparta.skeleton.model.Client;
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import com.sparta.skeleton.utilities.logging.LoggerSingleton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -32,7 +33,7 @@ public class TraineeAllocationManager {
     public static void allocateToTrainingCentres(Deque<Trainee> waitList, ArrayList<TrainingCentre> centres) {
         int traineeUptake;
         for (TrainingCentre centre : centres) { // fill each training centre before going to the next centre
-            if (centre.trainingCentreIsFull()){
+            if (centre.trainingCentreIsFull()) {
                 continue;
             }
             traineeUptake = TrainingCentreManager.generateRandomTraineeUptake();
@@ -45,10 +46,28 @@ public class TraineeAllocationManager {
         }
     }
 
+    public static void benchTrainees(Deque<Trainee> graduates, ArrayList<TrainingCentre> trainingCentres) {
+        ArrayList<Trainee> traineesToBeRemoved = new ArrayList<>();
+        for (TrainingCentre centre : trainingCentres) {
+            for (Trainee trainee : centre.getTraineeList()) {
+                if (trainee.getMonthsTrained() >= 12) {
+                    graduates.add(trainee);
+                    traineesToBeRemoved.add(trainee);
+                }
+            }
+            centre.getTraineeList().removeAll(traineesToBeRemoved);
+        }
+    }
+
     public static void allocateToClients(Deque<Trainee> graduates, ArrayList<Client> clients) {
         for (Client client : clients) { // fill each training centre before going to the next centre
-            if (!client.isHappy()){
+            logger.log(Level.FINE, client.getClientID() + "::" + Arrays.toString(client.getTypeOfTrainee()) + "::" + client.getTraineeRequirement() + "::" + client.getCountMonths() + "::" + client.isHappy());
+            if (!client.isHappy()) {
                 continue;
+            }
+            logger.log(Level.FINE, String.valueOf(client.getClientID()));
+            if (client.getCountMonths() % 12 == 0) {
+                client.setCurrentTraineeRequirement();
             }
             logger.log(Level.FINE, "Current client graduate list before populating: " + "id: " + client.getClientID() + " list count: " + client.getTraineeList().size());
             ClientManager.populateClients(graduates, client);
