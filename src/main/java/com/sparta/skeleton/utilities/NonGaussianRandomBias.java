@@ -9,8 +9,6 @@ public class NonGaussianRandomBias {
         Random randomInt = new Random();
         double num = randomDouble.nextDouble();
 
-        System.out.println("Random double generated: " + num);
-
         if (num < 0.8){ // 80% chance
             return randomInt.nextInt(15, 50);
         } else if (num < 0.9) { // 10% chance

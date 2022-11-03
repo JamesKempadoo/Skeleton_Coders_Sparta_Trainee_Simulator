@@ -62,9 +62,4 @@ public class TrainingCentreManager {
         }
     }
 
-    //USER STORIES
-    //trainees populate training centre
-    //Full capacity Management
-    //Prioritize waiting list (? ask if its in here)
-
 }

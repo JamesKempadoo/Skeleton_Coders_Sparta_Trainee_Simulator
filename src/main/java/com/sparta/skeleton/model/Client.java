@@ -15,7 +15,7 @@ public class Client {
 
     private int traineeRequirement;
 
-    private String typeOfTrainee;
+    private String[] typeOfTrainee;
 
     public Client() {
         clientID = increment;
@@ -31,7 +31,7 @@ public class Client {
         increment++;
     }
 
-    public ArrayList<Trainee> getClientList() {
+    public ArrayList<Trainee> getTraineeList() {
         return clientList;
     }
 
@@ -51,12 +51,12 @@ public class Client {
         return traineeRequirement;
     }
 
-    public String getTypeOfTrainee() {
+    public String[] getTypeOfTrainee() {
         return typeOfTrainee;
     }
 
-    private String setTypeOfTrainee() {
-        return TraineeHelper.getRandomTraineeType();
+    private String[] setTypeOfTrainee() {
+        return new String[]{TraineeHelper.getRandomTraineeType()};
     }
 
     private int setTraineeRequirement() {
