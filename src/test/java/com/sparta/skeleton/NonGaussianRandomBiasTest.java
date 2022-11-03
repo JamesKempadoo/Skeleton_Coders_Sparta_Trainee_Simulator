@@ -1,15 +1,15 @@
 package com.sparta.skeleton;
 
-import com.sparta.skeleton.utilities.RandomBias;
+import com.sparta.skeleton.utilities.NonGaussianRandomBias;
 import org.junit.jupiter.api.Test;
 
-public class RandomBiasTest {
+public class NonGaussianRandomBiasTest {
 
     @Test
     void display100RandomNumbers(){
 
         for (int i = 0; i<101 ; i++)
-            System.out.println(RandomBias.randomBiasGenerator());
+            System.out.println(NonGaussianRandomBias.randomBiasGenerator());
     }
 
     @Test
@@ -22,7 +22,7 @@ public class RandomBiasTest {
         final double MILL = 1000000;
 
         for (int i = 0; i<1000001 ; i++){
-            int tempInt = RandomBias.randomBiasGenerator();
+            int tempInt = NonGaussianRandomBias.randomBiasGenerator();
             if (tempInt < 50)  {
                 between15And50++;
             } else if (tempInt < 100) {

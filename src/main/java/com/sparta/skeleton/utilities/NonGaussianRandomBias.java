@@ -2,7 +2,7 @@ package com.sparta.skeleton.utilities;
 
 import java.util.Random;
 
-public class RandomBias {
+public class NonGaussianRandomBias {
 
     public static int randomBiasGenerator() {
         Random randomDouble = new Random();
