@@ -8,6 +8,8 @@ public class Trainee {
     private final int traineeID;
     private final String courseType;
 
+    private int monthsTrained = 0;
+
     public Trainee() {
         traineeID = increment;
         courseType = TraineeHelper.getRandomTraineeType();
@@ -20,6 +22,14 @@ public class Trainee {
 
     public String getCourseType() {
         return courseType;
+    }
+
+    public void incrementMonthsTrained() {
+        monthsTrained++;
+    }
+
+    public int getMonthsTrained() {
+        return monthsTrained;
     }
 
 }
