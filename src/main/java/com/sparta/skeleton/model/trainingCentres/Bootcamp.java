@@ -1,4 +1,4 @@
-package com.sparta.skeleton.model.TrainingCentres;
+package com.sparta.skeleton.model.trainingCentres;
 
 public class Bootcamp extends TrainingCentre{
     //Can train a max of 500 trainees

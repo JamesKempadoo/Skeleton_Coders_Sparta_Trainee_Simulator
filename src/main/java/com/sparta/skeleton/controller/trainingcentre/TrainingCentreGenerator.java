@@ -1,9 +1,9 @@
 package com.sparta.skeleton.controller.trainingcentre;
 
-import com.sparta.skeleton.model.TrainingCentres.Bootcamp;
-import com.sparta.skeleton.model.TrainingCentres.TechCentre;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
-import com.sparta.skeleton.model.TrainingCentres.TrainingHub;
+import com.sparta.skeleton.model.trainingCentres.Bootcamp;
+import com.sparta.skeleton.model.trainingCentres.TechCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingHub;
 
 import java.util.ArrayList;
 import java.util.Random;

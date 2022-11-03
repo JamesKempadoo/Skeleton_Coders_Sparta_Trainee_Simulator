@@ -2,7 +2,7 @@ package com.sparta.skeleton.controller.trainingcentre;
 
 import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 
 import java.util.*;
 

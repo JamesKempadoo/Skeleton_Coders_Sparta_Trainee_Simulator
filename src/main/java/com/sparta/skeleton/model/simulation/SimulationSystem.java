@@ -1,12 +1,14 @@
-package com.sparta.skeleton;
+package com.sparta.skeleton.model.simulation;
 
 import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.controller.trainee.TraineeGenerator;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreGenerator;
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreManager;
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
-import com.sparta.skeleton.util.log.LoggerSingleton;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
+import com.sparta.skeleton.utilities.TraineeHelper;
+import com.sparta.skeleton.utilities.TrainingCentreHelper;
+import com.sparta.skeleton.utilities.logging.LoggerSingleton;
 import com.sparta.skeleton.view.DisplayManager;
 
 import java.util.*;
@@ -17,13 +19,13 @@ import java.util.stream.Collectors;
 public class SimulationSystem {
 
     static Logger logger = LoggerSingleton.getSingleton().getLogger();
-    private final Deque<Trainee> waitingList = new LinkedList<>();
+    protected final Deque<Trainee> waitingList = new LinkedList<>();
 
-    private Queue<Trainee> traineesInWild = new LinkedList<>();
+    protected Queue<Trainee> traineesInWild = new LinkedList<>();
 
-    private final ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
+    protected final ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
 
-    private final ArrayList<TrainingCentre> closedTrainingCentres = new ArrayList<>();
+    protected final ArrayList<TrainingCentre> closedTrainingCentres = new ArrayList<>();
 
     public void runSimulation(int years, boolean isOutputAnnual) {
         int durationInMonths = years * 12;
@@ -90,35 +92,33 @@ public class SimulationSystem {
 
     @Override
     public String toString() {
-        String[] trainingCentreTypes =  {"TrainingHub", "Bootcamp", "TechCentre"};
-        String[] traineeCourses =  {"Java", "C#", "Data", "DevOps", "Business"};
         StringBuilder sb = new StringBuilder();
 
         sb.append("Number of open centres: ").append(trainingCentres.size());
-        formatOutputByTrainingCentreType(trainingCentres, trainingCentreTypes, sb);
+        formatOutputByTrainingCentreType(trainingCentres, sb);
 
 
         sb.append("\nNumber of full centres: ").append(getListOfFullTrainingCentres().size());
-        formatOutputByTrainingCentreType(getListOfFullTrainingCentres(),trainingCentreTypes,sb);
+        formatOutputByTrainingCentreType(getListOfFullTrainingCentres(), sb);
 
         sb.append("\nNumber of closed centres: ").append(closedTrainingCentres.size());
-        formatOutputByTrainingCentreType(closedTrainingCentres,trainingCentreTypes,sb);
+        formatOutputByTrainingCentreType(closedTrainingCentres, sb);
 
         sb.append("\nNumber of trainees currently on training: ").append(getNumberOfTraineesInTraining());
-        for (String traineeCourse : traineeCourses){
+        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES){
             sb.append("\n  ").append(traineeCourse).append(": ").append(getNumberOfTraineesInTraining(traineeCourse));
         }
 
         sb.append("\nNumber of trainees currently on waiting list: ").append(waitingList.size());
-        for (String traineeCourse : traineeCourses){
+        for (String traineeCourse : TraineeHelper.TRAINEE_TYPES){
             sb.append("\n  ").append(traineeCourse).append(": ").append(getNumberOfTraineesInWaitingListByType(traineeCourse));
         }
 
         return sb.toString();
     }
 
-    private void formatOutputByTrainingCentreType(List<TrainingCentre> trainingCentres, String[] trainingCentreTypes, StringBuilder sb) {
-        for (String trainingCentreType : trainingCentreTypes){
+    private void formatOutputByTrainingCentreType(List<TrainingCentre> trainingCentres, StringBuilder sb) {
+        for (String trainingCentreType : TrainingCentreHelper.TRAINING_CENTRE_TYPES){
             sb.append("\n  ").append(trainingCentreType).append(": ").append(getNumberOfTrainingCentresByType(trainingCentres,trainingCentreType));
         }
     }

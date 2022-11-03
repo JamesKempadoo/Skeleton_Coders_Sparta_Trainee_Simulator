@@ -1,4 +1,4 @@
-package com.sparta.skeleton.model.TrainingCentres;
+package com.sparta.skeleton.model.trainingCentres;
 
 import com.sparta.skeleton.model.Trainee;
 

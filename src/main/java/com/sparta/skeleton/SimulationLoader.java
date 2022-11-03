@@ -1,6 +1,7 @@
 package com.sparta.skeleton;
 
-import com.sparta.skeleton.util.log.LoggerSingleton;
+import com.sparta.skeleton.model.simulation.SimulationSystem;
+import com.sparta.skeleton.utilities.logging.LoggerSingleton;
 import com.sparta.skeleton.view.DisplayManager;
 
 import java.io.BufferedReader;

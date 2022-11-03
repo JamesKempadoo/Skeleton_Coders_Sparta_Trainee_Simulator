@@ -1,10 +1,6 @@
 package com.sparta.skeleton.view;
 
-import com.sparta.skeleton.SimulationSystem;
-import com.sparta.skeleton.model.Trainee;
-
-import java.util.List;
-import java.util.Queue;
+import com.sparta.skeleton.model.simulation.SimulationSystem;
 
 public class DisplayManager {
 

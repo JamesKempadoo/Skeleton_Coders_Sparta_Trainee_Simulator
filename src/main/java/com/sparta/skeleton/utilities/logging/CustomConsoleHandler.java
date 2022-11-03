@@ -1,4 +1,4 @@
-package com.sparta.skeleton.util.log;
+package com.sparta.skeleton.utilities.logging;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;

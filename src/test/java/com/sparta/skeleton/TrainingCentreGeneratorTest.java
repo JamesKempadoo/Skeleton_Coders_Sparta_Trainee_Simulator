@@ -1,8 +1,8 @@
 package com.sparta.skeleton;
 
 import com.sparta.skeleton.controller.trainingcentre.TrainingCentreGenerator;
-import com.sparta.skeleton.model.TrainingCentres.Bootcamp;
-import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
+import com.sparta.skeleton.model.trainingCentres.Bootcamp;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
