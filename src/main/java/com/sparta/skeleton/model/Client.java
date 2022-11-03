@@ -85,7 +85,7 @@ public class Client {
     }
 
     public void addTrainee(Trainee trainee) {
-        if(clientList.size() < traineeRequirement) {
+        if(clientList.size() < currentTraineeRequirement) {
             clientList.add(trainee);
         }
     }
