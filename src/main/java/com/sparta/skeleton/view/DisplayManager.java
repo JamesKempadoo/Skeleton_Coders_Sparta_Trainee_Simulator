@@ -23,10 +23,14 @@ public class DisplayManager {
         System.out.print("\nPress 'e' to exit or any other key to run another simulation:");
     }
 
-    public static void printOutput(SimulationSystem simulationSystem, int numOfYears) {
-
-        System.out.println("\nThe result of the simulation at the end of year " + numOfYears + ":" +
-                "\n" + simulationSystem.toString());
+    public static void printOutput(SimulationSystem simulationSystem, int period, boolean isOutputMonthly) {
+        if (isOutputMonthly) {
+            System.out.println("\nThe result of the simulation at the end of month " + period + ":" +
+                    "\n" + simulationSystem.toString());
+        } else {
+            System.out.println("\nThe result of the simulation at the end of year " + period + ":" +
+                    "\n" + simulationSystem.toString());
+        }
 
     }
 

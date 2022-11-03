@@ -27,7 +27,7 @@ public class SimulationSystem {
 
     protected final ArrayList<TrainingCentre> closedTrainingCentres = new ArrayList<>();
 
-    public void runSimulation(int years, boolean isOutputAnnual) {
+    public void runSimulation(int years, boolean isOutputMonthly) {
         int durationInMonths = years * 12;
         logger.log(Level.INFO, "Start of the simulation with duration: " + durationInMonths + " months.");
         for (int i = 1; i <= durationInMonths; i++) {
@@ -40,12 +40,11 @@ public class SimulationSystem {
             TrainingCentreManager.incrementMonthCounter(trainingCentres);
             TraineeAllocationManager.allocate(traineesInWild, waitingList, trainingCentres);
             TrainingCentreManager.close(trainingCentres,waitingList,closedTrainingCentres);
-            if (isOutputAnnual && i % 12 == 0) {
-                DisplayManager.printOutput(this, i / 12);
+            if (isOutputMonthly && i < durationInMonths) {
+                DisplayManager.printOutput(this, i, true);
+            } else if (i == durationInMonths) {
+                DisplayManager.printOutput(this,durationInMonths/12,false);
             }
-        }
-        if (!isOutputAnnual) {
-            DisplayManager.printOutput(this, durationInMonths / 12);
         }
     }
 
@@ -106,12 +105,12 @@ public class SimulationSystem {
 
         sb.append("\nNumber of trainees currently on training: ").append(getNumberOfTraineesInTraining());
         for (String traineeCourse : TraineeHelper.TRAINEE_TYPES){
-            sb.append("\n  ").append(traineeCourse).append(": ").append(getNumberOfTraineesInTraining(traineeCourse));
+            sb.append("\n  - ").append(traineeCourse).append(": ").append(getNumberOfTraineesInTraining(traineeCourse));
         }
 
         sb.append("\nNumber of trainees currently on waiting list: ").append(waitingList.size());
         for (String traineeCourse : TraineeHelper.TRAINEE_TYPES){
-            sb.append("\n  ").append(traineeCourse).append(": ").append(getNumberOfTraineesInWaitingListByType(traineeCourse));
+            sb.append("\n  - ").append(traineeCourse).append(": ").append(getNumberOfTraineesInWaitingListByType(traineeCourse));
         }
 
         return sb.toString();
@@ -119,7 +118,7 @@ public class SimulationSystem {
 
     private void formatOutputByTrainingCentreType(List<TrainingCentre> trainingCentres, StringBuilder sb) {
         for (String trainingCentreType : TrainingCentreHelper.TRAINING_CENTRE_TYPES){
-            sb.append("\n  ").append(trainingCentreType).append(": ").append(getNumberOfTrainingCentresByType(trainingCentres,trainingCentreType));
+            sb.append("\n  - ").append(trainingCentreType).append(": ").append(getNumberOfTrainingCentresByType(trainingCentres,trainingCentreType));
         }
     }
 }
