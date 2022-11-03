@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public abstract class TrainingCentre {
 
-    int trainingCentreID = 1;
+    int trainingCentreID;
     static int increment = 1;
 
     protected int maxCapacity;
@@ -14,7 +14,9 @@ public abstract class TrainingCentre {
 
     protected int countMonths = 0;
 
-    protected int maxMonths = 1;
+    protected int maxMonths;
+
+    protected String[] courseTypes;
 
     public TrainingCentre(int maxCapacity, int maxMonths) {
         trainingCentreID = increment;
@@ -54,6 +56,14 @@ public abstract class TrainingCentre {
 
     public boolean isOverMaxMonths() {
         return countMonths >= maxMonths;
+    }
+
+    public String[] getCourseTypes() {
+        return courseTypes;
+    }
+
+    public void setCourseType(String[] courseType) {
+        this.courseTypes = courseType;
     }
 
 

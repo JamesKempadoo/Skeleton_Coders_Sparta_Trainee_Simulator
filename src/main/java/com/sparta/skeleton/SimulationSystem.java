@@ -9,12 +9,10 @@ import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
 import com.sparta.skeleton.util.log.LoggerSingleton;
 import com.sparta.skeleton.view.DisplayManager;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class SimulationSystem {
 
@@ -33,12 +31,13 @@ public class SimulationSystem {
         for (int i = 1; i <= durationInMonths; i++) {
             logger.log(Level.FINE, "Current month in simulation: " + i);
             traineesInWild = TraineeGenerator.getTrainees();
-            TrainingCentreManager.close(trainingCentres,waitingList,closedTrainingCentres);
             if (i % 2 == 0) {
                 logger.log(Level.FINER, "Training centre generated in month: " + i);
-                trainingCentres.add(TrainingCentreGenerator.generateTrainingCentre());
+                TrainingCentreGenerator.generateTrainingCentre(trainingCentres);
             }
+            TrainingCentreManager.incrementMonthCounter(trainingCentres);
             TraineeAllocationManager.allocate(traineesInWild, waitingList, trainingCentres);
+            TrainingCentreManager.close(trainingCentres,waitingList,closedTrainingCentres);
             if (isOutputAnnual && i % 12 == 0) {
                 DisplayManager.printOutput(this, i / 12);
             }
@@ -48,20 +47,12 @@ public class SimulationSystem {
         }
     }
 
-    public long getNumberOfFullTrainingCentres() {
-        return trainingCentres.stream().filter(TrainingCentre::trainingCentreIsFull).count();
+    public List<TrainingCentre> getListOfFullTrainingCentres() {
+        return trainingCentres.stream().filter(TrainingCentre::trainingCentreIsFull).collect(Collectors.toList());
     }
 
-    public long getNumberOfClosedTrainingCentresByType(String typeOfTrainingCentres){
-        return closedTrainingCentres.stream().filter(trainingCentre -> trainingCentre.getClass().getSimpleName().equals(typeOfTrainingCentres)).count();
-    }
-
-    public long getNumberOfOpenTrainingCentresByType(String typeOfTrainingCentres){
+    public long getNumberOfTrainingCentresByType(List<TrainingCentre> trainingCentres, String typeOfTrainingCentres){
         return trainingCentres.stream().filter(trainingCentre -> trainingCentre.getClass().getSimpleName().equals(typeOfTrainingCentres)).count();
-    }
-
-    public long getNumberOfFullTrainingCentresByType(String typeOfTrainingCentres) {
-        return trainingCentres.stream().filter(trainingCentre -> trainingCentre.trainingCentreIsFull() && trainingCentre.getClass().getSimpleName().equals(typeOfTrainingCentres)).count();
     }
 
     public int getNumberOfTraineesInTraining() {
@@ -93,6 +84,10 @@ public class SimulationSystem {
         return trainingCentres;
     }
 
+    public ArrayList<TrainingCentre> getClosedTrainingCentres() {
+        return closedTrainingCentres;
+    }
+
     @Override
     public String toString() {
         String[] trainingCentreTypes =  {"TrainingHub", "Bootcamp", "TechCentre"};
@@ -100,59 +95,31 @@ public class SimulationSystem {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Number of open centres: ").append(trainingCentres.size());
-        for (String trainingCentreType : trainingCentreTypes){
-            sb.append("\n\tNumber of open centres (").append(trainingCentreType).append("): ").append(getNumberOfOpenTrainingCentresByType(trainingCentreType));
-        }
+        formatOutputByTrainingCentreType(trainingCentres, trainingCentreTypes, sb);
 
 
-        sb.append("\nNumber of full centres: ").append(getNumberOfFullTrainingCentres());
-        for (String trainingCentreType : trainingCentreTypes){
-            sb.append("\n\tNumber of full centres (").append(trainingCentreType).append("): ").append(getNumberOfFullTrainingCentresByType(trainingCentreType));
-        }
-
+        sb.append("\nNumber of full centres: ").append(getListOfFullTrainingCentres().size());
+        formatOutputByTrainingCentreType(getListOfFullTrainingCentres(),trainingCentreTypes,sb);
 
         sb.append("\nNumber of closed centres: ").append(closedTrainingCentres.size());
-        for (String trainingCentreType : trainingCentreTypes){
-            sb.append("\n\tNumber of closed centres (").append(trainingCentreType).append("): ").append(getNumberOfClosedTrainingCentresByType(trainingCentreType));
-        }
-
+        formatOutputByTrainingCentreType(closedTrainingCentres,trainingCentreTypes,sb);
 
         sb.append("\nNumber of trainees currently on training: ").append(getNumberOfTraineesInTraining());
         for (String traineeCourse : traineeCourses){
-            sb.append("\n\tNumber of trainees (").append(traineeCourse).append("): ").append(getNumberOfTraineesInTraining(traineeCourse));
+            sb.append("\n  ").append(traineeCourse).append(": ").append(getNumberOfTraineesInTraining(traineeCourse));
         }
-
 
         sb.append("\nNumber of trainees currently on waiting list: ").append(waitingList.size());
         for (String traineeCourse : traineeCourses){
-            sb.append("\n\tNumber of trainees (").append(traineeCourse).append("): ").append(getNumberOfTraineesInWaitingListByType(traineeCourse));
+            sb.append("\n  ").append(traineeCourse).append(": ").append(getNumberOfTraineesInWaitingListByType(traineeCourse));
         }
 
         return sb.toString();
+    }
 
-//
-//        return "Number of open centres: " + trainingCentres.size() +
-//                "\n\tNumber of open centres (Training Hub): " + getOpenCentreByType(trainingCentres, "Training Hub") +
-//                "\n\tNumber of open centres (Bootcamp): " + getOpenCentreByType(trainingCentres, "Bootcamp") +
-//                "\n\tNumber of open centres (Tech Centre): " + getOpenCentreByType(trainingCentres, "Tech Centre") +
-//
-//                "\nNumber of full centres: " + getNumberOfFullTrainingCentres() +
-//                "\n\tNumber of full centres (Training Hub): " + getNumberOfFullTrainingCentresByType("Training Hub") +
-//                "\n\tNumber of full centres (Bootcamp): " + getNumberOfFullTrainingCentresByType("Bootcamp") +
-//                "\n\tNumber of full centres (Tech Centre): " + getNumberOfFullTrainingCentresByType("Tech Centre") +
-//
-//                "\nNumber of closed centres: " + closedTrainingCentres.size() +
-//                "\n\tNumber of closed centres (Training Hub): " + getNumberOfClosedTrainingCentresByType("Training Hub") +
-//                "\n\tNumber of closed centres (Bootcamp): " + getNumberOfClosedTrainingCentresByType("Bootcamp") +
-//                "\n\tNumber of closed centres (Tech Centre): " + getNumberOfClosedTrainingCentresByType("Tech Centre") +
-//
-//                "\nNumber of trainees currently on training: " + getNumberOfTraineesInTraining() +
-//                "\n\tNumber of trainees (Java): " +  getNumberOfTraineesInTraining("Java") +
-//                "\n\tNumber of trainees (C#): " +  getNumberOfTraineesInTraining("C#") +
-//                "\n\tNumber of trainees (Data): " +  getNumberOfTraineesInTraining("Data") +
-//                "\n\tNumber of trainees (DevOps): " +  getNumberOfTraineesInTraining("DevOps") +
-//                "\n\tNumber of trainees (Business): " +  getNumberOfTraineesInTraining("Business") +
-//
-//                "\nNumber of trainees on the waiting list: " + waitingList.size();
+    private void formatOutputByTrainingCentreType(List<TrainingCentre> trainingCentres, String[] trainingCentreTypes, StringBuilder sb) {
+        for (String trainingCentreType : trainingCentreTypes){
+            sb.append("\n  ").append(trainingCentreType).append(": ").append(getNumberOfTrainingCentresByType(trainingCentres,trainingCentreType));
+        }
     }
 }

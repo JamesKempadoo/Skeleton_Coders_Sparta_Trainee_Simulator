@@ -6,11 +6,10 @@ public class Bootcamp extends TrainingCentre{
     //Close after 3 months if it still has less than 25 people
     //Only 2 can exist at a time
 
-    private final int maxCapacity = 500;
-
 
     public Bootcamp() {
         super(500, 3);
+        setCourseType(new String[] {"Java", "C#", "Data", "DevOps", "Business"});
     }
 
 

@@ -1,15 +1,16 @@
 package com.sparta.skeleton;
 
 import com.sparta.skeleton.model.Trainee;
-import com.sparta.skeleton.model.TrainingCentre;
+import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
+import com.sparta.skeleton.model.TrainingCentres.TrainingHub;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TrainingCentreTest {
-    private static TrainingCentre trainingCentre1 = new TrainingCentre();
-    private static TrainingCentre trainingCentre2 = new TrainingCentre();
-    private static TrainingCentre trainingCentre3 = new TrainingCentre();
+    private static TrainingCentre trainingCentre1 = new TrainingHub();
+    private static TrainingCentre trainingCentre2 = new TrainingHub();
+    private static TrainingCentre trainingCentre3 = new TrainingHub();
 
     @Test
     @DisplayName("check first new training centre get id returns 1")
@@ -25,7 +26,7 @@ public class TrainingCentreTest {
     @Test
     @DisplayName("check training centre is full is false")
     public void checkTrainingCentreIsFullIsFalse() {
-        Assertions.assertEquals(false,trainingCentre1.trainingCentreIsFull());
+        Assertions.assertFalse(trainingCentre1.trainingCentreIsFull());
     }
 
     @Test
@@ -59,7 +60,7 @@ public class TrainingCentreTest {
     @Test
     @DisplayName("check training centre is full is True")
     public void checkTrainingCentreIsFullIsTrue() {
-        Assertions.assertEquals(true,trainingCentre3.trainingCentreIsFull());
+        Assertions.assertTrue(trainingCentre3.trainingCentreIsFull());
     }
 
     @Test

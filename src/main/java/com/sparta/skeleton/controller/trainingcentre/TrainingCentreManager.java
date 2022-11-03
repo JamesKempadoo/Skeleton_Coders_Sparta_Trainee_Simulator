@@ -4,26 +4,23 @@ import com.sparta.skeleton.controller.trainee.TraineeAllocationManager;
 import com.sparta.skeleton.model.Trainee;
 import com.sparta.skeleton.model.TrainingCentres.TrainingCentre;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 public class TrainingCentreManager {
 
 
-    public static void close(ArrayList<TrainingCentre> centres, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres){
-
+    public static void close(ArrayList<TrainingCentre> centres, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres) {
+        ArrayList<TrainingCentre> centresToRemove = new ArrayList<>();
         for (TrainingCentre centre : centres) { // check each centre that needs to be closed
-            if (centre.getCurrentCapacity() < 25 && centre.isOverMaxMonths()){
+            if (centre.getCurrentCapacity() < 25 && centre.isOverMaxMonths()) {
                 closeCentre(centre, waitList, closedCentres);
-                centres.remove(centre);
+                centresToRemove.add(centre);
             }
         }
+        centres.removeAll(centresToRemove);
     }
 
-    public static void closeCentre (TrainingCentre centre, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres){
+    public static void closeCentre(TrainingCentre centre, Deque<Trainee> waitList, ArrayList<TrainingCentre> closedCentres) {
         TraineeAllocationManager.sendToFrontOfWaitList(centre, waitList);
         closedCentres.add(centre);
     }
@@ -34,25 +31,35 @@ public class TrainingCentreManager {
     }
 
 
-    public static int populateTrainingCentre(Queue<Trainee> traineeQueue, TrainingCentre trainingCentre, int uptake) {
-        int resultingUptake = uptake;
-        int loopMax = Math.min(uptake, trainingCentre.getRemainingCapacity());
-
-        for (int i =0; i<loopMax; i++){
-            if (traineeQueue.size() < 1 || trainingCentre.trainingCentreIsFull()) {
-                return resultingUptake;
-            } else {
+    public static int populateTrainingCentre(Deque<Trainee> traineeQueue, TrainingCentre trainingCentre, int uptake) {
+        ArrayList<Trainee> notMatchingCourseType = new ArrayList<>();
+        while (uptake > 0 && !trainingCentre.trainingCentreIsFull() && !traineeQueue.isEmpty()) {
+            if (Arrays.stream(trainingCentre.getCourseTypes()).anyMatch(s -> {
+                assert traineeQueue.peek() != null;
+                return s.equals(traineeQueue.peek().getCourseType());
+            })) {
                 trainingCentre.addTrainee(traineeQueue.remove());
-                resultingUptake--;
+                uptake--;
+            } else {
+                notMatchingCourseType.add(traineeQueue.remove());
             }
         }
-        return resultingUptake;
+        for (Trainee trainee : notMatchingCourseType) {
+            traineeQueue.addFirst(trainee);
+        }
+        return uptake;
     }
 
     public static int generateRandomTraineeUptake() {
         Random random = new Random();
 
         return random.nextInt(51);
+    }
+
+    public static void incrementMonthCounter(ArrayList<TrainingCentre> trainingCentres) {
+        for (TrainingCentre centre : trainingCentres) {
+            centre.incrementMonth();
+        }
     }
 
     //USER STORIES
