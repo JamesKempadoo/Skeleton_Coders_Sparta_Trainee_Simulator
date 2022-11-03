@@ -1,7 +1,8 @@
 package com.sparta.skeleton.controller.client;
 
 import com.sparta.skeleton.model.Client;
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
+import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,12 @@ public class ClientManager {
         }
         for (Trainee trainee : notMatchingClientType) {
             graduates.addFirst(trainee);
+        }
+    }
+
+    public static void incrementClientMonth(ArrayList<Client> clients) {
+        for (Client client : clients) {
+            client.incrementMonth();
         }
     }
 }

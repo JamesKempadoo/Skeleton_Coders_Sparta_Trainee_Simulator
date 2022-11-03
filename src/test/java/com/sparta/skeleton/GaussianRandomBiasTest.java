@@ -10,7 +10,7 @@ public class GaussianRandomBiasTest {
         Random rng = new Random();
         int delay;
         do {
-            double val = rng.nextGaussian() * 100 + 15;
+            double val = rng.nextGaussian() * 10 + 15;
             delay = (int) Math.round(val);
         } while (delay <= 15);
         return delay;

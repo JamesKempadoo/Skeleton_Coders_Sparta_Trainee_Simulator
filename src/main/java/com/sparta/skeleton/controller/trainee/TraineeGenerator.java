@@ -1,7 +1,7 @@
 package com.sparta.skeleton.controller.trainee;
 
 
-import com.sparta.skeleton.model.Trainee;
+import com.sparta.skeleton.model.trainees.Trainee;
 
 import java.util.LinkedList;
 import java.util.Queue;

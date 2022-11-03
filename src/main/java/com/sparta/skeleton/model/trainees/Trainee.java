@@ -1,4 +1,4 @@
-package com.sparta.skeleton.model;
+package com.sparta.skeleton.model.trainees;
 
 import com.sparta.skeleton.utilities.TraineeHelper;
 
