@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 public class TrainingCentreTest {
     private static TrainingCentre trainingCentre1 = new TrainingHub();
     private static TrainingCentre trainingCentre2 = new TrainingHub();
@@ -48,18 +50,13 @@ public class TrainingCentreTest {
     }
 
     @Test
-    @DisplayName("check capacity of training centre is 100")
+    @DisplayName("check capacity of training centre is 100 and training centre is full is True")
     public void checkCapacityOfTrainingCentreIs100() {
         for (int i = 0; i < 101; i++){
             Trainee trainee = new Trainee();
             trainingCentre3.addTrainee(trainee);
         }
         Assertions.assertEquals(100,trainingCentre3.getCurrentCapacity());
-    }
-
-    @Test
-    @DisplayName("check training centre is full is True")
-    public void checkTrainingCentreIsFullIsTrue() {
         Assertions.assertTrue(trainingCentre3.trainingCentreIsFull());
     }
 
@@ -73,10 +70,19 @@ public class TrainingCentreTest {
     @Test
     @DisplayName("check training centre remaining capacity")
     public void checkTrainingCentreRemainingCapacity() {
+        TrainingCentre trainingCentre4 = new TrainingHub();
         for (int i = 0; i < 99; i++){
             Trainee trainee = new Trainee();
-            trainingCentre3.addTrainee(trainee);
+            trainingCentre4.addTrainee(trainee);
         }
-        Assertions.assertEquals(1,trainingCentre3.getRemainingCapacity());
+        Assertions.assertEquals(1,trainingCentre4.getRemainingCapacity());
+    }
+
+    @Test
+    @DisplayName("Test that a valid course type is set to a Training Centre")
+    public void testThatAValidCourseTypeIsSetToATrainingCentre() {
+        String[] courses = {"Java", "C#", "Data", "DevOps", "Business"};
+        trainingCentre1.setCourseType(courses);
+        Assertions.assertArrayEquals(courses, trainingCentre1.getCourseTypes());
     }
 }
