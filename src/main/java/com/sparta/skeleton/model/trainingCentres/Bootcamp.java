@@ -1,5 +1,7 @@
 package com.sparta.skeleton.model.trainingCentres;
 
+import com.sparta.skeleton.utilities.TraineeHelper;
+
 public class Bootcamp extends TrainingCentre{
     //Can train a max of 500 trainees
     //Can stay open for 3 months with less than 25 people
@@ -8,9 +10,18 @@ public class Bootcamp extends TrainingCentre{
 
 
     public Bootcamp() {
-        super(500, 3);
-        setCourseType(new String[] {"Java", "C#", "Data", "DevOps", "Business"});
+        super();
+        setCourseType(TraineeHelper.TRAINEE_TYPES);
     }
 
 
+    @Override
+    public int getMaxMonths() {
+        return 3;
+    }
+
+    @Override
+    public int getMaxCapacity() {
+        return 500;
+    }
 }

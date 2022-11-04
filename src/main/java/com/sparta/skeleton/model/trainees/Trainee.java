@@ -12,7 +12,7 @@ public class Trainee {
 
     public Trainee() {
         traineeID = increment;
-        courseType = TraineeHelper.getRandomTraineeType();
+        courseType = TraineeHelper.getRandomTraineeTypes(1)[0];
         increment++;
     }
 

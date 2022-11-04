@@ -5,40 +5,31 @@ import com.sparta.skeleton.model.trainees.Trainee;
 import java.util.ArrayList;
 
 public abstract class TrainingCentre {
-
-    int trainingCentreID;
-    static int increment = 1;
-
-    protected int maxCapacity;
-    protected ArrayList<Trainee> traineeList = new ArrayList<>();
-
+    protected final int trainingCentreID;
+    protected static int increment = 1;
     protected int countMonths = 0;
-
-    protected int maxMonths;
-
+    protected ArrayList<Trainee> traineesList = new ArrayList<>();
     protected String[] courseTypes;
 
-    public TrainingCentre(int maxCapacity, int maxMonths) {
+    public TrainingCentre() {
         trainingCentreID = increment;
         increment++;
-        this.maxCapacity = maxCapacity;
-        this.maxMonths = maxMonths;
     }
 
     public int getCurrentCapacity() {
-        return traineeList.size();
+        return traineesList.size();
     }
     public int getRemainingCapacity() {
-        return maxCapacity-traineeList.size();
+        return getMaxCapacity()- traineesList.size();
     }
 
     public boolean trainingCentreIsFull() {
-        return maxCapacity == traineeList.size();
+        return getMaxCapacity() == traineesList.size();
     }
 
     public void addTrainee(Trainee trainee) {
-        if(traineeList.size() < maxCapacity) {
-            traineeList.add(trainee);
+        if(traineesList.size() < getMaxCapacity()) {
+            traineesList.add(trainee);
         }
     }
 
@@ -46,8 +37,8 @@ public abstract class TrainingCentre {
         return trainingCentreID;
     }
 
-    public ArrayList<Trainee> getTraineeList() {
-        return traineeList;
+    public ArrayList<Trainee> getTraineesList() {
+        return traineesList;
     }
 
     public void incrementMonth() {
@@ -55,7 +46,7 @@ public abstract class TrainingCentre {
     }
 
     public boolean isOverMaxMonths() {
-        return countMonths >= maxMonths;
+        return countMonths >= getMaxMonths();
     }
 
     public String[] getCourseTypes() {
@@ -65,6 +56,10 @@ public abstract class TrainingCentre {
     public void setCourseType(String[] courseType) {
         this.courseTypes = courseType;
     }
+
+    public abstract int getMaxMonths();
+
+    public abstract int getMaxCapacity();
 
 
 }

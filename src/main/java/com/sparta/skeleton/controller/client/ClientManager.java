@@ -2,7 +2,6 @@ package com.sparta.skeleton.controller.client;
 
 import com.sparta.skeleton.model.Client;
 import com.sparta.skeleton.model.trainees.Trainee;
-import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,12 +12,14 @@ public class ClientManager {
     public static void populateClients(Deque<Trainee> graduates, Client client) {
         ArrayList<Trainee> notMatchingClientType = new ArrayList<>();
 
-        while (client.getTraineeList().size() < client.getTraineeRequirement() && !graduates.isEmpty()) {
-            if (Arrays.stream(client.getTypeOfTrainee()).anyMatch(s -> {
+        while (!graduates.isEmpty()) {
+            if (Arrays.stream(client.getRequiredTraineeType()).anyMatch(s -> {
                 assert graduates.peek() != null;
                 return s.equals(graduates.peek().getCourseType());
             })) {
-                client.addTrainee(graduates.remove());
+                if (!client.addTrainee(graduates.remove())) {
+                    break;
+                }
             } else {
                 notMatchingClientType.add(graduates.remove());
             }

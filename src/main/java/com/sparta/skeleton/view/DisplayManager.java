@@ -16,7 +16,14 @@ public class DisplayManager {
     }
 
     public static void displayOutputOptions() {
-        System.out.print("Press 'y' to see the output annually or any other key to see only the final result:");
+        System.out.print("""
+                Choose how often you want to see the simulation state:
+                           
+                - 'y' to display annual output
+                - 'm' to display monthly output
+                - 'f' to display only the final output
+                                
+                Enter your input here:""");
     }
 
     public static void displayExitOption() {
@@ -25,10 +32,10 @@ public class DisplayManager {
 
     public static void printOutput(SimulationSystem simulationSystem, int period, boolean isOutputMonthly) {
         if (isOutputMonthly) {
-            System.out.println("\nThe result of the simulation at the end of month " + period + ":" +
+            System.out.println("\n-------------------- End of month " + period + " --------------------" +
                     "\n" + simulationSystem.toString());
         } else {
-            System.out.println("\nThe result of the simulation at the end of year " + period + ":" +
+            System.out.println("\n-------------------- End of year " + period + " --------------------" +
                     "\n" + simulationSystem.toString());
         }
 
@@ -36,6 +43,10 @@ public class DisplayManager {
 
     public static void printWrongInputMessage(String input) {
         System.out.print("Wrong input! Expected an integer greater than zero or the name of file and got \"" + input + "\"\nEnter your input here:");
+    }
+
+    public static void printWrongFrequencyInput(String input) {
+        System.out.print("Wrong input! Expected 'y', 'm' or 'f' and got \"" + input + "\"\nEnter your input here:");
     }
 
     public static void printErrorInFile(String s, int line) {
