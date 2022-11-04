@@ -54,4 +54,11 @@ public class DisplayManager {
     }
 
 
+    public static void printWrongBoundsMessage() {
+        System.out.println("Given max bound is lower than min bound!\nBound is set back to default.");
+    }
+
+    public static void printErrorInPropertiesFile() {
+        System.out.println("Error in loading properties file!\nValues are set back to default.");
+    }
 }
