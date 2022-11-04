@@ -13,6 +13,8 @@ import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
 import com.sparta.skeleton.utilities.logging.LoggerSingleton;
 import com.sparta.skeleton.view.DisplayManager;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,18 +30,23 @@ public class SimulationSystem {
     protected final ArrayList<TrainingCentre> trainingCentres = new ArrayList<>();
     protected final ArrayList<TrainingCentre> closedTrainingCentres = new ArrayList<>();
 
+    private int newClientFreq = 12;
+    private int newCentreFreq = 2;
+
     public void runSimulation(int years, String outputFrequency) {
+
+        loadConfiguration();
         JSONFileWriter.openJSONFile();
         int durationInMonths = years * 12;
         LOGGER.log(Level.INFO, "Start of the simulation with duration: " + durationInMonths + " months.");
         for (int i = 1; i <= durationInMonths; i++) {
             LOGGER.log(Level.FINE, "Current month in simulation: " + i);
             traineesInWild = TraineeGenerator.getTrainees();
-            if (i % 2 == 0) {
+            if (i % newCentreFreq == 0) {
                 LOGGER.log(Level.FINER, "Training centre is generated");
                 TrainingCentreGenerator.generateTrainingCentre(trainingCentres);
             }
-            if (i % 12 == 0) {
+            if (i % newClientFreq == 0) {
                 clients.add(ClientGenerator.generateClient());
                 LOGGER.log(Level.FINER, "Current number of clients: " + clients.size());
             }
@@ -61,6 +68,17 @@ public class SimulationSystem {
             }
         }
         JSONFileWriter.closeJSONFile();
+    }
+
+    private void loadConfiguration() {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileReader("src/main/resources/configuration.properties"));
+            newClientFreq = Integer.parseInt(properties.getProperty("newClientFreq"));
+            newCentreFreq = Integer.parseInt(properties.getProperty("newCentreFreq"));
+        } catch (IOException e) {
+            LOGGER.log(Level.INFO, e.getMessage());
+        }
     }
 
     private void incrementMonthCounter() {
