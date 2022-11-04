@@ -37,32 +37,33 @@ public class SimulationLoader {
                     in.nextLine();
                 }
             } while (true);
-            boolean isOutputAnnual;
+            String outputFrequency;
             DisplayManager.displayOutputOptions();
             do {
                 try {
-                    isOutputAnnual = in.next().equalsIgnoreCase("y");
+                    Pattern pattern = Pattern.compile("[ymf]");
+                    outputFrequency = in.next(pattern);
                     break;
                 } catch (InputMismatchException e) {
-                    DisplayManager.printWrongInputMessage(in.next());
+                    DisplayManager.printWrongFrequencyInput(in.next());
                     in.nextLine();
                 }
             } while (true);
             if (isNumOfYears) {
-                runSimulationForSingleInput(Integer.parseInt(userInput), isOutputAnnual);
+                runSimulationForSingleInput(Integer.parseInt(userInput), outputFrequency);
             } else {
-                runSimulationFromFile(PATH_PREFIX + userInput, isOutputAnnual);
+                runSimulationFromFile(PATH_PREFIX + userInput, outputFrequency);
             }
             DisplayManager.displayExitOption();
         } while (!in.next().equalsIgnoreCase("e"));
     }
 
-    private static void runSimulationForSingleInput(int userInput, boolean isOutputAnnual) {
+    private static void runSimulationForSingleInput(int userInput, String outputFrequency) {
         SimulationSystem simulationSystem = new SimulationSystem();
-        simulationSystem.runSimulation(userInput, isOutputAnnual);
+        simulationSystem.runSimulation(userInput, outputFrequency);
     }
 
-    private void runSimulationFromFile(String filename, boolean isOutputAnnual) {
+    private void runSimulationFromFile(String filename, String outputFrequency) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line;
             int lineCounter = 0;
@@ -75,7 +76,7 @@ public class SimulationLoader {
                     DisplayManager.printErrorInFile(line.split(" ")[0], lineCounter);
                     continue;
                 }
-                runSimulationForSingleInput(numOfYears, isOutputAnnual);
+                runSimulationForSingleInput(numOfYears, outputFrequency);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

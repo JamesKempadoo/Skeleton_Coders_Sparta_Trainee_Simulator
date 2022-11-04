@@ -5,7 +5,6 @@ import com.sparta.skeleton.utilities.NonGaussianRandomBias;
 import com.sparta.skeleton.utilities.TraineeHelper;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Client {
 
@@ -13,32 +12,26 @@ public class Client {
 
     private final int clientID;
     private int countMonths = 0;
-    private ArrayList<Trainee> clientList = new ArrayList<>();
+    private final ArrayList<Trainee> graduatesOnSite = new ArrayList<>();
 
     private final int traineeRequirement;
 
     private int currentTraineeRequirement;
 
-    private String[] typeOfTrainee;
+    private final String[] requiredTraineeType;
+
+    private boolean isHappy = true;
 
     public Client() {
         clientID = increment;
-        typeOfTrainee = setTypeOfTrainee();
-        traineeRequirement = setTraineeRequirement();
-        currentTraineeRequirement = traineeRequirement;
-        increment++;
-    }
-
-    public Client(int traineeRequirement) {
-        clientID = increment;
-        typeOfTrainee = setTypeOfTrainee();
-        this.traineeRequirement = traineeRequirement;
+        requiredTraineeType = TraineeHelper.getRandomTraineeTypes(1);
+        traineeRequirement = NonGaussianRandomBias.randomBiasGenerator();
         currentTraineeRequirement = traineeRequirement;
         increment++;
     }
 
     public ArrayList<Trainee> getTraineeList() {
-        return clientList;
+        return graduatesOnSite;
     }
 
     public int getCountMonths() {
@@ -46,7 +39,12 @@ public class Client {
     }
 
     public boolean isHappy() {
-        return countMonths % 12 != 0 || clientList.size() >= currentTraineeRequirement;
+        if ((countMonths % 12 != 0 || graduatesOnSite.size() >= currentTraineeRequirement) && isHappy) {
+            return true;
+        } else {
+            isHappy = false;
+            return false;
+        }
     }
 
     public void setCurrentTraineeRequirement() {
@@ -58,35 +56,23 @@ public class Client {
     }
 
     public int getNumberOfGraduates() {
-        return clientList.size();
+        return graduatesOnSite.size();
     }
 
     public int getTraineeRequirement() {
         return currentTraineeRequirement;
     }
 
-    public String[] getTypeOfTrainee() {
-        return typeOfTrainee;
+    public String[] getRequiredTraineeType() {
+        return requiredTraineeType;
     }
 
-    private String[] setTypeOfTrainee() {
-        return new String[]{TraineeHelper.getRandomTraineeType()};
-    }
-
-    private int setTraineeRequirement() {
-//        Random rng = new Random();
-//        int delay;
-//        do {
-//            double val = rng.nextGaussian() * 100 + 15;
-//            delay = (int) Math.round(val);
-//        } while (delay <= 15);
-//        return delay;
-        return NonGaussianRandomBias.randomBiasGenerator();
-    }
-
-    public void addTrainee(Trainee trainee) {
-        if(clientList.size() < currentTraineeRequirement) {
-            clientList.add(trainee);
+    public boolean addTrainee(Trainee trainee) {
+        if(graduatesOnSite.size() < currentTraineeRequirement) {
+            graduatesOnSite.add(trainee);
+            return true;
+        } else {
+            return false;
         }
     }
 

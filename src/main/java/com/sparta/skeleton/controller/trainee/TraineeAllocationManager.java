@@ -49,19 +49,19 @@ public class TraineeAllocationManager {
     public static void benchTrainees(Deque<Trainee> graduates, ArrayList<TrainingCentre> trainingCentres) {
         ArrayList<Trainee> traineesToBeRemoved = new ArrayList<>();
         for (TrainingCentre centre : trainingCentres) {
-            for (Trainee trainee : centre.getTraineeList()) {
+            for (Trainee trainee : centre.getTraineesList()) {
                 if (trainee.getMonthsTrained() >= 12) {
                     graduates.add(trainee);
                     traineesToBeRemoved.add(trainee);
                 }
             }
-            centre.getTraineeList().removeAll(traineesToBeRemoved);
+            centre.getTraineesList().removeAll(traineesToBeRemoved);
         }
     }
 
     public static void allocateToClients(Deque<Trainee> graduates, ArrayList<Client> clients) {
         for (Client client : clients) { // fill each training centre before going to the next centre
-            logger.log(Level.FINE, client.getClientID() + "::" + Arrays.toString(client.getTypeOfTrainee()) + "::" + client.getTraineeRequirement() + "::" + client.getCountMonths() + "::" + client.isHappy());
+            logger.log(Level.FINE, client.getClientID() + "::" + Arrays.toString(client.getRequiredTraineeType()) + "::" + client.getTraineeRequirement() + "::" + client.getCountMonths() + "::" + client.isHappy());
             if (!client.isHappy()) {
                 continue;
             }
@@ -76,7 +76,7 @@ public class TraineeAllocationManager {
     }
 
     public static void sendToFrontOfWaitList(TrainingCentre trainingCentre, Deque<Trainee> waitList) {
-        ArrayList<Trainee> trainees = trainingCentre.getTraineeList();
+        ArrayList<Trainee> trainees = trainingCentre.getTraineesList();
         for (Trainee trainee : trainees) {
             waitList.addFirst(trainee);
         }

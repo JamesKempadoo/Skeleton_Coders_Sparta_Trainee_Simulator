@@ -8,9 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TrainingCentreTest {
-    private static TrainingCentre trainingCentre1 = new TrainingHub();
-    private static TrainingCentre trainingCentre2 = new TrainingHub();
-    private static TrainingCentre trainingCentre3 = new TrainingHub();
+    private static final TrainingCentre trainingCentre1 = new TrainingHub();
+    private static final TrainingCentre trainingCentre2 = new TrainingHub();
+    private static final TrainingCentre trainingCentre3 = new TrainingHub();
 
     @Test
     @DisplayName("check first new training centre get id returns 1")
@@ -34,7 +34,7 @@ public class TrainingCentreTest {
     public void checkIfTraineeIsAddedToTrainingCentre() {
         Trainee trainee = new Trainee();
         trainingCentre2.addTrainee(trainee);
-        Assertions.assertEquals(1,trainingCentre2.getTraineeList().size());
+        Assertions.assertEquals(1,trainingCentre2.getTraineesList().size());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class TrainingCentreTest {
             Trainee trainee = new Trainee();
             trainingCentre3.addTrainee(trainee);
         }
-        Assertions.assertEquals(100,trainingCentre3.getTraineeList().size());
+        Assertions.assertEquals(100,trainingCentre3.getTraineesList().size());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.sparta.skeleton;
 
+import com.sparta.skeleton.utilities.NonGaussianRandomBias;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -33,7 +34,7 @@ public class GaussianRandomBiasTest {
         final double MILL = 1000000;
 
         for (int i = 0; i<1000001 ; i++){
-            int tempInt = setTraineeRequirement();
+            int tempInt = NonGaussianRandomBias.randomBiasGenerator();
             if (tempInt < 50)  {
                 between15And50++;
             } else if (tempInt < 100) {

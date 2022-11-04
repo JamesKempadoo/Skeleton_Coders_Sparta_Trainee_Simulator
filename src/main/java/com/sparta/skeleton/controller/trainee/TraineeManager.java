@@ -9,7 +9,7 @@ public class TraineeManager {
 
     public static void incrementTraineeMonthCounter(ArrayList<TrainingCentre> trainingCentres) {
         for (TrainingCentre centre : trainingCentres) {
-            for (Trainee trainee :centre.getTraineeList()) {
+            for (Trainee trainee :centre.getTraineesList()) {
                 trainee.incrementMonthsTrained();
             }
         }

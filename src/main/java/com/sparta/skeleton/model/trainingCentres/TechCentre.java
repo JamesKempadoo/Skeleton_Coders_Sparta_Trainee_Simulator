@@ -1,6 +1,6 @@
 package com.sparta.skeleton.model.trainingCentres;
 
-import java.util.Random;
+import com.sparta.skeleton.utilities.TraineeHelper;
 
 public class TechCentre extends TrainingCentre {
     //Can train max of 200 trainees
@@ -8,9 +8,17 @@ public class TechCentre extends TrainingCentre {
     //Course type for centre is chosen randomly when opened
 
     public TechCentre() {
-        super(200, 1);
-        String[] courses = {"Java", "C#", "Data", "DevOps", "Business"};
-        Random rng = new Random();
-        setCourseType(new String[] {courses[rng.nextInt(courses.length)]});
+        super();
+        setCourseType(TraineeHelper.getRandomTraineeTypes(1));
+    }
+
+    @Override
+    public int getMaxMonths() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxCapacity() {
+        return 200;
     }
 }
