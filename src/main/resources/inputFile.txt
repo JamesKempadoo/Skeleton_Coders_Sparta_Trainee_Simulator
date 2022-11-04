@@ -1,0 +1,7 @@
+# This file is used to parse several inputs and run the simulation once
+# The input should be two positive integer numbers seperated by space
+# first number: years to run and second number: number of repetitions (optional)
+5 2
+3
+4 3
+10 2

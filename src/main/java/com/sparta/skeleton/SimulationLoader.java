@@ -68,6 +68,7 @@ public class SimulationLoader {
             String line;
             int lineCounter = 0;
             while ((line = bufferedReader.readLine()) != null) {
+                if (line.trim().startsWith("#")) continue;
                 lineCounter++;
                 String[] tokens = line.split(" ");
                 int numOfYears;
