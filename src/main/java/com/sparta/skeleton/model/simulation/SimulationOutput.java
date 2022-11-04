@@ -37,7 +37,7 @@ public class SimulationOutput {
             sb.append("\n  - ").append(traineeCourse).append(": ").append(simulationSystem.getNumberOfTraineesInDequeByType(traineeCourse, simulationSystem.graduatesList));
         }
 
-        sb.append("\nNumber of graduates currently with clients: ").append(simulationSystem.getNumberOfGraduatesInClients());
+        sb.append("\nNumber of graduates currently with clients: ").append(simulationSystem.getNumberOfGraduatesWithClients());
         for (String traineeCourse : TraineeHelper.TRAINEE_TYPES) {
             sb.append("\n  - ").append(traineeCourse).append(": ").append(simulationSystem.getNumberOfTraineesInClients(traineeCourse));
         }

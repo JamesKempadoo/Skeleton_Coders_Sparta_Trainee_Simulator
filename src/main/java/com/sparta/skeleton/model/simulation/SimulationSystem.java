@@ -29,6 +29,7 @@ public class SimulationSystem {
     protected final ArrayList<TrainingCentre> closedTrainingCentres = new ArrayList<>();
 
     public void runSimulation(int years, String outputFrequency) {
+        JSONFileWriter.openJSONFile();
         int durationInMonths = years * 12;
         LOGGER.log(Level.INFO, "Start of the simulation with duration: " + durationInMonths + " months.");
         for (int i = 1; i <= durationInMonths; i++) {
@@ -50,12 +51,16 @@ public class SimulationSystem {
             TraineeAllocationManager.allocateToClients(graduatesList, clients);
             if (outputFrequency.equals("y") && i % 12 == 0) {
                 DisplayManager.printOutput(this, i / 12, false);
+                JSONFileWriter.exportToJSON(this,i/12,"y");
             } else if (outputFrequency.equals("m")) {
                 DisplayManager.printOutput(this, i, true);
+                JSONFileWriter.exportToJSON(this,i,"m");
             } else if (outputFrequency.equals("f") && i == durationInMonths) {
                 DisplayManager.printOutput(this, i / 12, false);
+                JSONFileWriter.exportToJSON(this,i/12,"f");
             }
         }
+        JSONFileWriter.closeJSONFile();
     }
 
     private void incrementMonthCounter() {
@@ -87,7 +92,7 @@ public class SimulationSystem {
         return trainingCentres.stream().mapToInt(TrainingCentre::getCurrentCapacity).sum();
     }
 
-    public int getNumberOfGraduatesInClients() {
+    public int getNumberOfGraduatesWithClients() {
         return clients.stream().mapToInt(Client::getNumberOfGraduates).sum();
     }
 
