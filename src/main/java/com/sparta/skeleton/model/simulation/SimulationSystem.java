@@ -74,10 +74,33 @@ public class SimulationSystem {
         Properties properties = new Properties();
         try {
             properties.load(new FileReader("src/main/resources/configuration.properties"));
-            newClientFreq = Integer.parseInt(properties.getProperty("newClientFreq"));
-            newCentreFreq = Integer.parseInt(properties.getProperty("newCentreFreq"));
-        } catch (IOException e) {
+            int tempClientFreq = Integer.parseInt(properties.getProperty("newClientFreq"));
+            int tempCentreFreq = Integer.parseInt(properties.getProperty("newCentreFreq"));
+            int tempMaxBound = Integer.parseInt(properties.getProperty("traineeMax"));
+            int tempMinBound = Integer.parseInt(properties.getProperty("traineeMin"));
+            setConfiguration(tempClientFreq, tempCentreFreq, tempMaxBound, tempMinBound);
+
+
+        } catch (IOException | NumberFormatException e) {
             LOGGER.log(Level.INFO, e.getMessage());
+            DisplayManager.printErrorInPropertiesFile();
+        }
+    }
+
+    private void setConfiguration(int tempClientFreq, int tempCentreFreq, int tempMaxBound, int tempMinBound) {
+        if ( tempClientFreq >0 && tempCentreFreq > 0 &&  tempMaxBound > 0 &&  tempMinBound >0) {
+            newClientFreq = tempClientFreq;
+            newCentreFreq = tempCentreFreq;
+
+            if (tempMaxBound > tempMinBound) {
+                TraineeGenerator.traineeMax = tempMaxBound;
+                TraineeGenerator.traineeMin = tempMinBound;
+            } else {
+                LOGGER.log(Level.INFO, "Given max bound is lower than min bound...");
+                DisplayManager.printWrongBoundsMessage();
+            }
+        } else {
+            DisplayManager.printErrorInPropertiesFile();
         }
     }
 

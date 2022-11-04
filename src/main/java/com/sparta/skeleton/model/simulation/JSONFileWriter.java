@@ -19,8 +19,6 @@ public class JSONFileWriter {
     public static void exportToJSON(SimulationSystem simulationSystem, int duration, String outputFrequency) {
         JSONObject currentPeriod = new JSONObject();
 
-
-
         JSONObject openCentres = new JSONObject();
         openCentres.put("total", simulationSystem.trainingCentres.size());
         for (String trainingCentreType : TrainingCentreHelper.TRAINING_CENTRE_TYPES) {
@@ -111,7 +109,7 @@ public class JSONFileWriter {
 
     public static void closeJSONFile() {
         try {
-            fileWriter.write(finalObj.toString());
+            fileWriter.write(finalObj.toString(4));
             fileWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
