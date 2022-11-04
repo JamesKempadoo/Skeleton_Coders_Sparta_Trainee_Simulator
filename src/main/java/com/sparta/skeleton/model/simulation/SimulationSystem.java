@@ -88,7 +88,7 @@ public class SimulationSystem {
     }
 
     private void setConfiguration(int tempClientFreq, int tempCentreFreq, int tempMaxBound, int tempMinBound) {
-        if ( tempClientFreq >0 && tempCentreFreq > 0 &&  tempMaxBound > 0 &&  tempMinBound >0) {
+        if ( tempClientFreq >0 && tempCentreFreq > 0 &&  tempMaxBound > 0 &&  tempMinBound >=0) {
             newClientFreq = tempClientFreq;
             newCentreFreq = tempCentreFreq;
 
