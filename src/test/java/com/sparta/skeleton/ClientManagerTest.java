@@ -5,10 +5,7 @@ import com.sparta.skeleton.controller.trainee.TraineeGenerator;
 import com.sparta.skeleton.model.Client;
 import com.sparta.skeleton.model.trainees.Trainee;
 import com.sparta.skeleton.model.trainingCentres.TrainingCentre;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 
@@ -86,6 +83,7 @@ public class ClientManagerTest {
     }
 
     @Test
+    @RepeatedTest(10)
     @DisplayName("Checking client populate method")
     void checkPopulateClients(){
         Deque<Trainee> graduates = new LinkedList<>();
