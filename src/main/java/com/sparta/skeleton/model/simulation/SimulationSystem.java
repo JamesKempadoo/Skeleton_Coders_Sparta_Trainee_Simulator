@@ -51,13 +51,13 @@ public class SimulationSystem {
             TraineeAllocationManager.allocateToClients(graduatesList, clients);
             if (outputFrequency.equals("y") && i % 12 == 0) {
                 DisplayManager.printOutput(this, i / 12, false);
-                JSONFileWriter.exportToJSON(this,i/12,false);
+                JSONFileWriter.exportToJSON(this,i/12,"y");
             } else if (outputFrequency.equals("m")) {
                 DisplayManager.printOutput(this, i, true);
-                JSONFileWriter.exportToJSON(this,i,true);
+                JSONFileWriter.exportToJSON(this,i,"m");
             } else if (outputFrequency.equals("f") && i == durationInMonths) {
                 DisplayManager.printOutput(this, i / 12, false);
-                JSONFileWriter.exportToJSON(this,i/12,false);
+                JSONFileWriter.exportToJSON(this,i/12,"f");
             }
         }
         JSONFileWriter.closeJSONFile();

@@ -16,7 +16,7 @@ public class JSONFileWriter {
 
     private static final JSONArray finalObj = new JSONArray();
 
-    public static void exportToJSON(SimulationSystem simulationSystem, int duration, boolean isOutputMonthly) {
+    public static void exportToJSON(SimulationSystem simulationSystem, int duration, String outputFrequency) {
         JSONObject currentPeriod = new JSONObject();
 
 
@@ -83,12 +83,19 @@ public class JSONFileWriter {
         }
         currentPeriod.put("unhappy_clients", unhappyClients);
 
-        if (isOutputMonthly) {
-            currentPeriod.put("month", duration);
-            finalObj.put(duration-1,currentPeriod);
-        } else {
-            currentPeriod.put("year", duration);
-            finalObj.put(duration-1,currentPeriod);
+        switch (outputFrequency) {
+            case "m" -> {
+                currentPeriod.put("month", duration);
+                finalObj.put(duration - 1, currentPeriod);
+            }
+            case "y" -> {
+                currentPeriod.put("year", duration);
+                finalObj.put(duration - 1, currentPeriod);
+            }
+            case "f" -> {
+                currentPeriod.put("year", duration);
+                finalObj.put(0, currentPeriod);
+            }
         }
     }
 
