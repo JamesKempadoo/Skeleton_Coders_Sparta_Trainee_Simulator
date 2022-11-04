@@ -69,14 +69,22 @@ public class SimulationLoader {
             int lineCounter = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 lineCounter++;
+                String[] tokens = line.split(" ");
                 int numOfYears;
+                int repetitions = 1;
                 try {
-                    numOfYears = Integer.parseInt(line.split(" ")[0]);
+                    numOfYears = Integer.parseInt(tokens[0]);
+
+                    if (tokens.length > 1) {
+                        repetitions = Integer.parseInt(tokens[1]);
+                    }
                 } catch (NumberFormatException e) {
                     DisplayManager.printErrorInFile(line.split(" ")[0], lineCounter);
                     continue;
                 }
-                runSimulationForSingleInput(numOfYears, outputFrequency);
+                for (int i = 0; i < repetitions; i++) {
+                    runSimulationForSingleInput(numOfYears, outputFrequency);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

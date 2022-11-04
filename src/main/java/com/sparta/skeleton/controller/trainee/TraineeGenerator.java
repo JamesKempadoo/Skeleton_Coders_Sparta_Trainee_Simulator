@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class TraineeGenerator {
 
-    static final int TRAINEEMAX = 100;
-    static final int TRAINEEMIN = 0;
+    public static int traineeMax = 100;
+    public static int traineeMin = 0;
 
     static public Queue<Trainee> getTrainees() {
         long seed = System.currentTimeMillis();
@@ -19,7 +19,7 @@ public class TraineeGenerator {
 
     static public int getRandomTraineesCount(long seed) {
         Random randomizer = new Random(seed);
-        return randomizer.nextInt(TRAINEEMAX - TRAINEEMIN + 1) + TRAINEEMIN;
+        return randomizer.nextInt(traineeMax - traineeMin + 1) + traineeMin;
     }
 
     static public Queue<Trainee> generateTrainees(int count) {
